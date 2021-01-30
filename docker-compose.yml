@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=homedatabase
+      - MYSQL_DATABASE=mysqlpractice
+    ports:
+      - 3307:3306
+    volumes:
+      - /data/mysqlpractice/mysql:/var/lib/mysql
+
+  backend_express:
+    build:
+      context: ./backend_express
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - ./backend_express:/usr/src/app/backend
+
+#  backend_nest:
+#    build:
+#      context: ./backend_nest
+#      dockerfile: Dockerfile
+#    ports:
+#      - 3000:3000
+#    volumes:
+#      - ./backend_nest:/usr/src/app/backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:3000
+    volumes:
+    - ./frontend:/usr/src/app/frontend
