@@ -18,6 +18,12 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
+    environment:
+      - BACKEND_PORT=3000
+      - MYSQL_HOST=localhost
+      - MYSQL_USER=root
+      - MYSQL_DATABASE=mysqlpractice
+      - MYSQL_ROOT_PASSWORD=homedatabase
     volumes:
       - ./backend_express:/usr/src/app/backend
 
