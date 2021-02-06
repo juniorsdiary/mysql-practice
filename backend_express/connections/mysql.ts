@@ -1,22 +1,32 @@
-import mysql, { Pool } from 'mysql2';
+import mysql, { Connection } from 'mysql2/promise';
 
 import { mysqlConfig } from '../config/serverConfig';
-import {logger} from "../utils/logger";
+import { logger } from '../utils/logger';
 
-let pool: Pool | undefined;
+let connection: Connection | undefined;
 
-const getOrCreateMysqlConnection = (): Pool | undefined => {
-    if (pool) return pool;
-    logger.info('Create pool for mysql');
-    return mysql.createPool({
-        connectionLimit: 5,
-        host: mysqlConfig.host,
-        user: mysqlConfig.user,
-        database: mysqlConfig.database,
-        password: mysqlConfig.password
-    });
+const getOrCreateMysqlConnection = async (): Promise<Connection | undefined> => {
+    try {
+        if (connection) return connection;
+        connection = await mysql.createConnection({
+            host: mysqlConfig.host,
+            user: mysqlConfig.user,
+            port: mysqlConfig.port,
+            database: mysqlConfig.database,
+            password: mysqlConfig.password,
+            charset: 'UTF8MB4',
+            connectionLimit: 10,
+            waitForConnections: true,
+            queueLimit: 0
+        });
+        return connection;
+    } catch (e) {
+        console.log(e);
+        logger.error({ message: e.message })
+    }
+
 };
 
 export {
-    getOrCreateMysqlConnection
+    getOrCreateMysqlConnection,
 }

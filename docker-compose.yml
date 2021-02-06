@@ -1,5 +1,8 @@
 version: "3.7"
 
+networks:
+  mysql_practice:
+
 services:
   mysql:
     image: mysql:5.7
@@ -9,8 +12,12 @@ services:
       - MYSQL_DATABASE=mysqlpractice
     ports:
       - 3307:3306
+    networks:
+      - mysql_practice
     volumes:
       - /data/mysqlpractice/mysql:/var/lib/mysql
+      - ./mycustom.cnf:/etc/mysql/conf.d/mysql.cnf
+    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   backend_express:
     build:
@@ -20,10 +27,17 @@ services:
       - 3000:3000
     environment:
       - BACKEND_PORT=3000
-      - MYSQL_HOST=localhost
+      - MYSQL_HOST=mysql
       - MYSQL_USER=root
+      - MYSQL_PORT=3306
       - MYSQL_DATABASE=mysqlpractice
       - MYSQL_ROOT_PASSWORD=homedatabase
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    networks:
+      - mysql_practice
     volumes:
       - ./backend_express:/usr/src/app/backend
 
@@ -42,5 +56,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8000:3000
+    depends_on:
+      - backend_express
+    links:
+      - backend_express
     volumes:
     - ./frontend:/usr/src/app/frontend
