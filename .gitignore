@@ -1,4 +1,5 @@
 /backend_express/node_modules
 /backend_nest/node_modules
 /frontend/node_modules
+/uploader/node_modules
 .idea

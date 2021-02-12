@@ -41,6 +41,19 @@ services:
     volumes:
       - ./backend_express:/usr/src/app/backend
 
+  uploader:
+    build:
+      context: ./uploader
+      dockerfile: Dockerfile
+    ports:
+      - 4000:4000
+    environment:
+      - UPLOADER_PORT=4000
+    networks:
+      - mysql_practice
+    volumes:
+      - ./uplaoder:/usr/src/app/uplaoder
+
 #  backend_nest:
 #    build:
 #      context: ./backend_nest
