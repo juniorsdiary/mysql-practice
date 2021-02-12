@@ -18,11 +18,18 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
-const routes = [
+const links = [
     { href: 'books', title: "Books" },
     { href: 'authors', title: "Authors" },
     { href: 'tags', title: "Tags" },
 ];
+
+const routes = [
+    { path: "/books", component: BooksContainer },
+    { path: "/books/:id", component: SingleBookContainer },
+    { path: "/authors", component: () => <div>Authors</div> },
+    { path: "/authors/:id", component: () => <div>Author Single</div> },
+    ];
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -72,7 +79,7 @@ function App() {
                     <Toolbar />
                     <div className={classes.drawerContainer}>
                         <List>
-                            {routes.map(link => (
+                            {links.map(link => (
                                 <ListItem button component={(props) => <Link to={link.href} {...props} />} key={link.href}>
                                     {link.title}
                                 </ListItem>
@@ -82,15 +89,11 @@ function App() {
                 </Drawer>
                 <main className={classes.content}>
                     <Switch>
-                        <Route exact path="/books">
-                            <BooksContainer />
-                        </Route>
-                        <Route exact path="/books/:id">
-                            <SingleBookContainer />
-                        </Route>
-                        <Route path="/authors">
-                            <div>Authors</div>
-                        </Route>
+                        {routes.map(({path, component: Component}) => (
+                            <Route exact path={path}>
+                                <Component />
+                            </Route>
+                        ))}
                     </Switch>
                 </main>
             </div>
