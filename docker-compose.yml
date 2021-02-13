@@ -52,7 +52,7 @@ services:
     networks:
       - mysql_practice
     volumes:
-      - ./uplaoder:/usr/src/app/uplaoder
+      - ./uploader:/usr/src/app/uploader
 
 #  backend_nest:
 #    build:
@@ -70,8 +70,12 @@ services:
     ports:
       - 8000:3000
     depends_on:
+      - uploader
       - backend_express
     links:
+      - uploader
       - backend_express
+    networks:
+      - mysql_practice
     volumes:
     - ./frontend:/usr/src/app/frontend

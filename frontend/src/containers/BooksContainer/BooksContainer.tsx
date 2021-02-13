@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from "effector-react";
+import { useStore } from 'effector-react';
+import { useHistory } from 'react-router-dom';
+
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-import { useHistory } from "react-router-dom";
+
 // components
 import Toolbar from '@material-ui/core/Toolbar';
 import Table from '@material-ui/core/Table';
@@ -53,9 +55,7 @@ function BooksContainer() {
     const booksStore = useStore($books);
 
     useEffect(() => {
-        (async () => {
-            await getBooksFx({ skip: page * rowsPerPage, limit: rowsPerPage });
-        })();
+        getBooksFx({ skip: page * rowsPerPage, limit: rowsPerPage });
     }, []);
 
     useEffect(() => {

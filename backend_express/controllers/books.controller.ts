@@ -13,9 +13,11 @@ const getBooks = async (req: Request, res: Response) => {
 };
 
 const getBook = async (req: Request, res: Response) => {
-    const book: BookType = await getOneBook(req.params.id);
+    const book: BookType[] = await getOneBook(req.params.id);
 
-    res.json(book);
+    res.json({
+        ...(book[0])
+    });
 };
 
 const booksController = {
