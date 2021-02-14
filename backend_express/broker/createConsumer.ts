@@ -1,5 +1,5 @@
 import { wrapMsgPayloadWithCatch } from '../utils/wrapMsgPayloadWithCatch';
-import { Connection } from "amqplib";
+import { Connection } from 'amqplib';
 
 interface ICreateConsumer {
     connection: Connection;
@@ -12,6 +12,8 @@ export async function createConsumer({
      connection, queueName, handler, prefetch,
  }: ICreateConsumer) {
     const channel = await connection.createChannel();
+
     await channel.prefetch(prefetch, true);
+
     await channel.consume(queueName, wrapMsgPayloadWithCatch(handler, channel));
 }

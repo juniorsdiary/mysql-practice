@@ -24,5 +24,11 @@ const publishUploadCoverData = {
     queue: config.exchanges.UPLOAD_RESULT.queues.UPLOAD_COVER,
 } as IPublishData;
 
+const publishUploadBookData = {
+    exchangeName: config.exchanges.UPLOAD_RESULT.name,
+    queue: config.exchanges.UPLOAD_RESULT.queues.UPLOAD_BOOK,
+} as IPublishData;
+
 export const publishHelloWorld = createPublisher(publishData);
 export const publishUploadCoverResult = createPublisher(publishUploadCoverData);
+export const publishUploadBookResult = createPublisher(publishUploadBookData);

@@ -7,12 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
-import { $singleBook, getCertainBook, uploadBookImage } from '../../stores/singleBook';
+import { $singleBook, getCertainBook, uploadBookImage, uploadBook } from '../../stores/singleBook';
 import { BookType } from "../../types";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,7 +33,6 @@ const SingleBookContainer = () => {
     const classes = useStyles();
     const singleBook = useStore<BookType>($singleBook);
     let { id } = useParams<any>();
-    const uploadCoverRef = useRef() as React.RefObject<HTMLInputElement> | null | undefined;
 
     useEffect(() => {
         (async () => {
@@ -43,14 +40,23 @@ const SingleBookContainer = () => {
         })()
     }, []);
 
-    const handleUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault();
+    const handleUploadCover = async (e: ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData();
 
         const file = e?.target?.files?.length && e?.target?.files[0];
         if (file) {
             formData.append('bookCover', file, file?.name);
             await uploadBookImage({ id, data: formData });
+        }
+    }
+
+    const handleUploadBook = async (e: ChangeEvent<HTMLInputElement>) => {
+        const formData = new FormData();
+
+        const file = e?.target?.files?.length && e?.target?.files[0];
+        if (file) {
+            formData.append('book', file, file?.name);
+            await uploadBook({ id, data: formData });
         }
     }
 
@@ -63,11 +69,11 @@ const SingleBookContainer = () => {
                 </Typography>
                 <div className={classes.root}>
                     <input
+                        accept="image/*"
                         className={classes.input}
-                        ref={uploadCoverRef}
                         id="cover-button-file"
                         type="file"
-                        onChange={handleUploadFile}
+                        onChange={handleUploadCover}
                     />
                     <label htmlFor="cover-button-file">
                         <Button
@@ -81,10 +87,11 @@ const SingleBookContainer = () => {
                         </Button>
                     </label>
                     <input
+                        accept="application/pdf"
                         className={classes.input}
                         id="pdf-button-file"
                         type="file"
-                        onChange={handleUploadFile}
+                        onChange={handleUploadBook}
                     />
                     <label htmlFor="pdf-button-file">
                         <Button

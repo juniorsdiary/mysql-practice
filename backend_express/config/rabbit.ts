@@ -29,6 +29,13 @@ const config = {
                     options: {
                         durable: true,
                     },
+                },
+                UPLOAD_BOOK: {
+                    name: '_book',
+                    binding: '_book',
+                    options: {
+                        durable: true,
+                    },
                 }
             }
         }

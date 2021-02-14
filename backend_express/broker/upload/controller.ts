@@ -6,7 +6,21 @@ export const consumeUploadCover = async (payload: any, data: any, channel: any) 
             book_id: payload.message.book_id
         },
         updateData: {
-            image_cover_link: payload.message.imageCoverLink
+            image_cover_link: payload.message.image_cover_link
+        }
+    });
+
+    channel.ack(data);
+}
+
+export const consumeUploadBook = async (payload: any, data: any, channel: any) => {
+    console.log(payload.message);
+    await updateBook({
+        where: {
+            book_id: payload.message.book_id
+        },
+        updateData: {
+            book_link: payload.message.book_link
         }
     });
 

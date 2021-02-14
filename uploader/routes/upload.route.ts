@@ -10,6 +10,12 @@ uploadRoute.post(
     uploadController.uploadBookCover
 );
 
+uploadRoute.post(
+    '/book',
+    uploadMiddleWare,
+    uploadController.uploadBook
+);
+
 export {
     uploadRoute
 }
