@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import { serverConfig } from './config/serverConfig';
 import { logger } from './utils/logger';
 import { booksRoute } from './routes/books.route';
+import { initConsumers } from './broker';
 
 import ROUTES_NAMES from './const/routes.names';
 
@@ -16,12 +17,9 @@ app.use(bodyParser.json());
 
 app.use(ROUTES_NAMES.BOOKS, booksRoute);
 
-app.get('/', (req, res) => {
-    res.send('Express + TypeScript Server');
-});
-
 (async () => {
-    app.listen(serverConfig.backendPort, () => {
+    app.listen(serverConfig.backendPort, async () => {
+        await initConsumers();
         logger.info(`Server is running http://localhost:${serverConfig.backendPort}`);
     });
 })()

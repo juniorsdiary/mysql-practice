@@ -1,18 +1,30 @@
 import { Request, Response } from 'express';
-import { s3Client } from "../connections/s3Connection";
-import * as stream from "stream";
-import { awsConfig } from "../config/serverConfig";
-import { ManagedUpload } from "aws-sdk/lib/s3/managed_upload";
+import { s3Client } from '../connections/s3Connection';
+import * as stream from 'stream';
+import { awsConfig } from '../config/serverConfig';
+import { ManagedUpload } from 'aws-sdk/lib/s3/managed_upload';
+import { publishUploadCoverResult } from '../broker/hello/publishers';
 
-const uploadBookCover = (req: Request, res: Response) => {
+const uploadBookCover = async (req: Request, res: Response) => {
     const pass = new stream.PassThrough();
     const { book_id } = req.query;
-    // @ts-ignore
-    const params = {Bucket: awsConfig.bucketName, Key: `uploads/books/${book_id}/${req.fileName}`, Body: pass };
 
-    s3Client.upload(params, function(err: Error, data: ManagedUpload.SendData) {
-        if (err) console.log(err)
-        console.log(data);
+    const params = {
+        Bucket: awsConfig.bucketName,
+        // @ts-ignore
+        Key: `uploads/books/${book_id}/${req.fileName}`,
+        Body: pass
+    };
+
+    const data: ManagedUpload.SendData = await s3Client.upload(params).promise();
+
+    console.log(data);
+
+    await publishUploadCoverResult({
+        message: {
+            book_id,
+            imageCoverLink: data.Location,
+        }
     });
 
     // @ts-ignore

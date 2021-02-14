@@ -1,5 +1,5 @@
 import { BookType } from "../types";
-import { createEffect, createStore } from "effector";
+import { createApi, createEffect, createStore } from "effector";
 
 const initialState = {
     book_id: 0,
@@ -23,6 +23,23 @@ export const uploadBookImage = createEffect(async (params: any) => {
     return res.json();
 });
 
+
 export const $singleBook = createStore<BookType>(initialState)
+    .on(getCertainBook.pending, () => initialState)
     .on(getCertainBook.doneData, (state, data) => data)
     .on(uploadBookImage.doneData, (state, data) => data);
+
+export const singleBookApi = createApi($singleBook, {
+    setBook: (state, data) => setBook(state, data)
+});
+
+const setBook = (state: BookType, book: BookType) => state.book_id !== book.book_id ? book : state;
+
+// @ts-ignore
+getCertainBook.finally.watch(({ result, error }) => {
+    if (error) {
+        console.log('handler rejected', error)
+    } else {
+        singleBookApi.setBook(result);
+    }
+})

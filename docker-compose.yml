@@ -19,6 +19,22 @@ services:
       - ./mycustom.cnf:/etc/mysql/conf.d/mysql.cnf
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
+  rabbit:
+    image: rabbitmq:3.7.18-management-alpine
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=randomString
+      - RABBITMQ_DEFAULT_PASS=randomString
+      - RABBITMQ_ERLANG_COOKIE=randomString
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbitmq_management path_prefix "/rabbit"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    networks:
+      - mysql_practice
+    volumes:
+      - /rabbit:/var/lib/rabbitmq
+
   backend_express:
     build:
       context: ./backend_express
@@ -32,10 +48,15 @@ services:
       - MYSQL_PORT=3306
       - MYSQL_DATABASE=mysqlpractice
       - MYSQL_ROOT_PASSWORD=homedatabase
+      - RABBIT_HOST=rabbit
+      - RABBIT_USER=randomString
+      - RABBIT_PASS=randomString
     depends_on:
       - mysql
+      - rabbit
     links:
       - mysql
+      - rabbit
     networks:
       - mysql_practice
     volumes:
@@ -49,6 +70,15 @@ services:
       - 4000:4000
     environment:
       - UPLOADER_PORT=4000
+      - RABBIT_HOST=rabbit
+      - RABBIT_USER=randomString
+      - RABBIT_PASS=randomString
+    depends_on:
+      - mysql
+      - rabbit
+    links:
+      - mysql
+      - rabbit
     networks:
       - mysql_practice
     volumes:

@@ -4,8 +4,9 @@ import { useStore } from "effector-react";
 
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -22,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
         input: {
             display: 'none',
         },
+        button: {
+            margin: theme.spacing(1),
+        },
     }),
 );
 
@@ -31,7 +35,9 @@ const SingleBookContainer = () => {
     let { id } = useParams<any>();
 
     useEffect(() => {
-        getCertainBook(id);
+        (async () => {
+            await getCertainBook(id);
+        })()
     }, []);
 
     const handleUploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,29 +54,48 @@ const SingleBookContainer = () => {
     return (
         <>
             <Toolbar />
-            <Typography variant="h3" noWrap>
-                {singleBook.title}
-            </Typography>
+            <Box display="flex">
+                <Typography variant="h3" noWrap>
+                    {singleBook.title}
+                </Typography>
+                <div className={classes.root}>
+                    <input
+                        className={classes.input}
+                        id="cover-button-file"
+                        type="file"
+                        onChange={handleUploadFile}
+                    />
+                    <label htmlFor="cover-button-file">
+                        <Button
+                            variant="contained"
+                            color="default"
+                            className={classes.button}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            Upload Cover Image
+                        </Button>
+                    </label>
+                    <input
+                        className={classes.input}
+                        id="pdf-button-file"
+                        type="file"
+                        onChange={handleUploadFile}
+                    />
+                    <label htmlFor="pdf-button-file">
+                        <Button
+                            variant="contained"
+                            color="default"
+                            className={classes.button}
+                            startIcon={<CloudUploadIcon />}
+                        >
+                            Upload Book
+                        </Button>
+                    </label>
+                </div>
+            </Box>
             <Typography variant="subtitle1" noWrap>
                 {singleBook.subtitle}
             </Typography>
-            <div className={classes.root}>
-                <input
-                    className={classes.input}
-                    id="icon-button-file"
-                    type="file"
-                    onChange={handleUploadFile}
-                />
-                <label htmlFor="icon-button-file">
-                    <IconButton
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
-                    >
-                        <PhotoCamera />
-                    </IconButton>
-                </label>
-            </div>
         </>
     );
 };

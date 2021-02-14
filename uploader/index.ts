@@ -19,7 +19,8 @@ app.use(bodyParser.json());
 app.use(ROUTES_NAMES.UPLOAD, uploadRoute);
 
 (async () => {
-    app.listen(serverConfig.uploaderPort, () => {
+
+    app.listen(serverConfig.uploaderPort, async () => {
         logger.info(`Uploader is running http://localhost:${serverConfig.uploaderPort}`);
     });
 })()
