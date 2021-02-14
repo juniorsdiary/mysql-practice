@@ -16,15 +16,13 @@ const uploadBookCover = async (req: Request, res: Response) => {
         Body: pass
     };
 
-    const data: ManagedUpload.SendData = await s3Client.upload(params).promise();
-
-    console.log(data);
-
-    await publishUploadCoverResult({
-        message: {
-            book_id,
-            imageCoverLink: data.Location,
-        }
+    s3Client.upload(params, (err: Error, data: ManagedUpload.SendData) => {
+        publishUploadCoverResult({
+            message: {
+                book_id,
+                imageCoverLink: data.Location,
+            }
+        });
     });
 
     // @ts-ignore

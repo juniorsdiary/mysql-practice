@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react';
+import React, { useRef, ChangeEvent, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import { useStore } from "effector-react";
 
@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import IconButton from '@material-ui/core/IconButton';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
@@ -33,6 +35,7 @@ const SingleBookContainer = () => {
     const classes = useStyles();
     const singleBook = useStore<BookType>($singleBook);
     let { id } = useParams<any>();
+    const uploadCoverRef = useRef() as React.RefObject<HTMLInputElement> | null | undefined;
 
     useEffect(() => {
         (async () => {
@@ -61,6 +64,7 @@ const SingleBookContainer = () => {
                 <div className={classes.root}>
                     <input
                         className={classes.input}
+                        ref={uploadCoverRef}
                         id="cover-button-file"
                         type="file"
                         onChange={handleUploadFile}
@@ -69,6 +73,7 @@ const SingleBookContainer = () => {
                         <Button
                             variant="contained"
                             color="default"
+                            component="span"
                             className={classes.button}
                             startIcon={<CloudUploadIcon />}
                         >
@@ -85,6 +90,7 @@ const SingleBookContainer = () => {
                         <Button
                             variant="contained"
                             color="default"
+                            component="span"
                             className={classes.button}
                             startIcon={<CloudUploadIcon />}
                         >
