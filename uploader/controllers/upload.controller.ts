@@ -4,6 +4,8 @@ import * as stream from 'stream';
 import { awsConfig } from '../config/serverConfig';
 import { ManagedUpload } from 'aws-sdk/lib/s3/managed_upload';
 import { publishUploadCoverResult, publishUploadBookResult } from '../broker/hello/publishers';
+import { GetObjectOutput } from 'aws-sdk/clients/s3';
+import { Readable } from 'stream';
 
 const uploadBookCover = async (req: Request, res: Response) => {
     const pass = new stream.PassThrough();
@@ -57,8 +59,31 @@ const uploadBook = (req: Request, res: Response) => {
     res.end();
 }
 
+const getBookCover = async (req: Request, res: Response) => {
+    const { book_id } = req.params;
+
+    const params = {
+        Bucket: awsConfig.bucketName,
+        Key: `uploads/books/${book_id}/sign.png`,
+    };
+
+    // @ts-ignore
+
+    const objectStream = await s3Client.getObject(params).promise() as GetObjectOutput;
+
+    if (objectStream) {
+        const stream = Readable.from(objectStream?.Body as Buffer);
+
+        stream.pipe(res);
+        stream.on('end', () => {
+            res.end();
+        });
+    }
+};
+
 const uploadController = {
     uploadBookCover,
+    getBookCover,
     uploadBook
 };
 

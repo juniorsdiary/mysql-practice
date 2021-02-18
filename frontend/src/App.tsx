@@ -10,7 +10,15 @@ import { NavigationContainer } from './containers/NavigationContainer/Navigation
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import purple from '@material-ui/core/colors/purple';
+import green from '@material-ui/core/colors/green';
+import {
+    createMuiTheme,
+    makeStyles,
+    createStyles,
+    ThemeProvider,
+    Theme
+} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -27,24 +35,37 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: purple[500],
+        },
+        secondary: {
+            main: green[500],
+        },
+    },
+});
+
 function App() {
     const classes = useStyles();
 
     return (
         <Router>
-            <div className={classes.root}>
-                <AppBar position="fixed" className={classes.appBar}>
-                    <Toolbar>
-                        <Typography variant="h6" noWrap>
-                            Books Reader
-                        </Typography>
-                    </Toolbar>
-                </AppBar>
-                <NavigationContainer />
-                <main className={classes.content}>
-                    <RoutesContainer />
-                </main>
-            </div>
+            <ThemeProvider theme={theme}>
+                <div className={classes.root}>
+                    <AppBar position="fixed" className={classes.appBar}>
+                        <Toolbar>
+                            <Typography variant="h6" noWrap>
+                                Books Reader
+                            </Typography>
+                        </Toolbar>
+                    </AppBar>
+                    <NavigationContainer />
+                    <main className={classes.content}>
+                        <RoutesContainer />
+                    </main>
+                </div>
+            </ThemeProvider>
         </Router>
     );
 }

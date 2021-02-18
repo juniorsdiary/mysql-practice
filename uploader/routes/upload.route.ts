@@ -16,6 +16,11 @@ uploadRoute.post(
     uploadController.uploadBook
 );
 
+uploadRoute.get(
+    '/bookCover/:book_id',
+    uploadController.getBookCover
+);
+
 export {
     uploadRoute
 }

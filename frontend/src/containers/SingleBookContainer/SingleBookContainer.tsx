@@ -1,17 +1,24 @@
-import React, { useRef, ChangeEvent, useEffect } from 'react';
-import { useParams } from "react-router-dom";
-import { useStore } from "effector-react";
+import React, { ChangeEvent, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useStore } from 'effector-react';
 
+// material ui
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-
+import Skeleton from '@material-ui/lab/Skeleton';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
+// components
+import { Image } from '../../components/Image/Image';
+
+// stores
 import { $singleBook, getCertainBook, uploadBookImage, uploadBook } from '../../stores/singleBook';
-import { BookType } from "../../types";
+
+// types
+import { BookType } from '../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -64,9 +71,15 @@ const SingleBookContainer = () => {
         <>
             <Toolbar />
             <Box display="flex">
-                <Typography variant="h3" noWrap>
-                    {singleBook.title}
-                </Typography>
+                <Box display="flex" flexDirection={'column'}>
+                    <Typography variant="h3" noWrap>
+                        {singleBook.title}
+                    </Typography>
+                    {singleBook.book_id
+                        ? <Image width={600} height={800} src={`http://localhost:4000/upload/bookCover/${singleBook.book_id}`} />
+                        : <Skeleton variant="rect" width={600} height={800} />
+                    }
+                </Box>
                 <div className={classes.root}>
                     <input
                         accept="image/*"

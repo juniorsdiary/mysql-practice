@@ -14,7 +14,6 @@ export const consumeUploadCover = async (payload: any, data: any, channel: any) 
 }
 
 export const consumeUploadBook = async (payload: any, data: any, channel: any) => {
-    console.log(payload.message);
     await updateBook({
         where: {
             book_id: payload.message.book_id
