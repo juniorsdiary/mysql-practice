@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme: Theme) =>
         button: {
             margin: theme.spacing(1),
         },
+        subtitle: {
+            fontWeight: 600,
+        }
     }),
 );
 
@@ -76,8 +79,16 @@ const SingleBookContainer = () => {
                         {singleBook.title}
                     </Typography>
                     {singleBook.book_id
-                        ? <Image width={600} height={800} src={`http://localhost:4000/upload/bookCover/${singleBook.book_id}`} />
-                        : <Skeleton variant="rect" width={600} height={800} />
+                        ? <Image
+                            width={600}
+                            height={800}
+                            src={`http://localhost:4000/upload/bookCover/${singleBook.book_id}`}
+                        />
+                        : <Skeleton
+                            variant="rect"
+                            width={600}
+                            height={800}
+                        />
                     }
                 </Box>
                 <div className={classes.root}>
@@ -119,9 +130,33 @@ const SingleBookContainer = () => {
                     </label>
                 </div>
             </Box>
-            <Typography variant="subtitle1" noWrap>
-                {singleBook.subtitle}
-            </Typography>
+            <Box>
+                <Typography display='inline' className={classes.subtitle} variant="subtitle1" noWrap>
+                    Subtitle:
+                </Typography>
+                &nbsp;
+                <Typography display='inline' noWrap>
+                    {singleBook.subtitle}
+                </Typography>
+            </Box>
+            <Box>
+                <Typography display='inline' className={classes.subtitle} variant="subtitle1" noWrap>
+                    Authors:
+                </Typography>
+                &nbsp;
+                <Typography display='inline' noWrap>
+                    {singleBook?.authors?.map(author => `${author.first_name} ${author.middle_name} ${author.last_name}`).join(', ') || 'No Authors'}
+                </Typography>
+            </Box>
+            <Box>
+                <Typography display='inline' className={classes.subtitle} variant="subtitle1" noWrap>
+                    Tags:
+                </Typography>
+                &nbsp;
+                <Typography display='inline' noWrap>
+                    {singleBook?.tags?.map(tag => tag.tag_name).join(', ') || 'No Tags'}
+                </Typography>
+            </Box>
         </>
     );
 };
