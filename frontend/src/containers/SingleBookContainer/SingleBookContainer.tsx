@@ -50,16 +50,6 @@ const SingleBookContainer = () => {
         })()
     }, []);
 
-    const handleUploadCover = async (e: ChangeEvent<HTMLInputElement>) => {
-        const formData = new FormData();
-
-        const file = e?.target?.files?.length && e?.target?.files[0];
-        if (file) {
-            formData.append('bookCover', file, file?.name);
-            await uploadBookImage({ id, data: formData });
-        }
-    }
-
     const handleUploadBook = async (e: ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData();
 
@@ -78,7 +68,7 @@ const SingleBookContainer = () => {
                     <Typography variant="h3" noWrap>
                         {singleBook.title}
                     </Typography>
-                    {singleBook.book_id
+                    {singleBook.book_id && singleBook.image_cover_link
                         ? <Image
                             width={600}
                             height={800}
@@ -92,24 +82,6 @@ const SingleBookContainer = () => {
                     }
                 </Box>
                 <div className={classes.root}>
-                    <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="cover-button-file"
-                        type="file"
-                        onChange={handleUploadCover}
-                    />
-                    <label htmlFor="cover-button-file">
-                        <Button
-                            variant="contained"
-                            color="default"
-                            component="span"
-                            className={classes.button}
-                            startIcon={<CloudUploadIcon />}
-                        >
-                            Upload Cover Image
-                        </Button>
-                    </label>
                     <input
                         accept="application/pdf"
                         className={classes.input}
@@ -145,7 +117,7 @@ const SingleBookContainer = () => {
                 </Typography>
                 &nbsp;
                 <Typography display='inline' noWrap>
-                    {singleBook?.authors?.map(author => `${author.first_name} ${author.middle_name} ${author.last_name}`).join(', ') || 'No Authors'}
+                    {singleBook?.authors?.map(author => `${author.first_name} ${author.middle_name || ''} ${author.last_name}`).join(', ') || 'No Authors'}
                 </Typography>
             </Box>
             <Box>
