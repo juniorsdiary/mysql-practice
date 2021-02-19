@@ -12,10 +12,10 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // components
-import { Image } from '../../components/Image/Image';
+import { PdfView } from '../../components/PdfView/PdfView';
 
 // stores
-import { $singleBook, getCertainBook, uploadBookImage, uploadBook } from '../../stores/singleBook';
+import { $singleBook, getCertainBook, uploadBook } from '../../stores/singleBook';
 
 // types
 import { BookType } from '../../types';
@@ -69,11 +69,7 @@ const SingleBookContainer = () => {
                         {singleBook.title}
                     </Typography>
                     {singleBook.book_id && singleBook.image_cover_link
-                        ? <Image
-                            width={600}
-                            height={800}
-                            src={`http://localhost:4000/upload/bookCover/${singleBook.book_id}`}
-                        />
+                        ? <PdfView sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}/0`} />
                         : <Skeleton
                             variant="rect"
                             width={600}

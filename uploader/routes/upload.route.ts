@@ -15,6 +15,11 @@ uploadRoute.get(
     uploadController.getBookCover
 );
 
+uploadRoute.get(
+    '/getBookPage/:book_id/:page_number',
+    uploadController.getBookPage
+);
+
 export {
     uploadRoute
 }
