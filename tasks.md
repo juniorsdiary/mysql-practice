@@ -1,8 +1,9 @@
-1. Add uploading pdf by pages
-2. Convert first page to png and upload as cover
-3. Add sorting by columns
-4. For every entity make links to single page
-5. PdfReader feature
-6. Authentication/Authorization
-7. Admin panel
-8. Add unit-testing
+1. Convert first page to png and upload as cover
+1. Add sorting by columns
+1. Add Authors pages and Tags pages
+1. For every entity make links to single page
+1. PdfReader feature
+1. Authentication/Authorization
+1. Admin panel
+1. Add unit-testing
+1. Add cancel upload

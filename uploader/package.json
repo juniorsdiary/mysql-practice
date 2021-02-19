@@ -12,6 +12,7 @@
     "@types/amqp": "^0.2.4",
     "@types/amqplib": "^0.5.17",
     "@types/cors": "^2.8.9",
+    "@types/pdfkit": "^0.11.0",
     "@types/winston": "^2.4.4",
     "amqp": "^0.2.7",
     "amqplib": "^0.6.0",
@@ -21,6 +22,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "nodemon": "^2.0.7",
+    "pdf-lib": "^1.16.0",
+    "pdfkit": "^0.11.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
