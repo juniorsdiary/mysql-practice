@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as PDFjs from 'pdfjs-dist';
-import {PDFPageProxy} from "pdfjs-dist/types/display/api";
-import Skeleton from "@material-ui/lab/Skeleton";
+import { PDFPageProxy } from 'pdfjs-dist/types/display/api';
+
+import Skeleton from '@material-ui/lab/Skeleton';
 
 type PdfViewProps = {
     sourceDocument: string;
@@ -26,6 +27,7 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
 
     useEffect(() => {
         PDFjs.GlobalWorkerOptions.workerSrc = '//cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/build/pdf.worker.js';
+
         (async () => {
             await handleGetDocumentSource(`${sourceDocument}/${page}`);
         })()
@@ -33,7 +35,7 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
 
     useEffect(() => {
         handleGetDocumentSource(`${sourceDocument}/${page}`);
-    }, [sourceDocument, page])
+    }, [sourceDocument, page]);
 
     useEffect(() => {
         (async () => {
@@ -62,7 +64,8 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
         })()
     }, [documentSource]);
 
-    return (documentSource
+    return (
+        documentSource
         ? <canvas
             width={600}
             height={800}
@@ -72,7 +75,8 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
             variant="rect"
             width={600}
             height={800}
-        />);
+        />
+        );
 
 };
 
