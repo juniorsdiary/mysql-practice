@@ -14,12 +14,15 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import TablePagination from '@material-ui/core/TablePagination';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 
 // store
 import { $books, getBooksFx } from '../../stores/books';
 
 // types
 import { BookType } from '../../types';
+import {Box} from "@material-ui/core";
 
 const useStyles = makeStyles(() =>
     createStyles({
@@ -41,6 +44,9 @@ const useStyles = makeStyles(() =>
             minHeight: 600,
             display: 'flex',
             flexDirection: 'column'
+        },
+        tableCell: {
+            cursor: 'pointer',
         }
     }),
 );
@@ -52,6 +58,9 @@ const BooksContainer: React.FunctionComponent = () => {
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
+    const [orderDir, setOrderDir] = useState<string>('asc');
+    const [orderBy, setOrderBy] = useState<string>('');
+
     const booksStore = useStore($books);
 
     useEffect(() => {
@@ -61,9 +70,11 @@ const BooksContainer: React.FunctionComponent = () => {
     useEffect(() => {
         getBooksFx({
             skip: page * rowsPerPage,
-            limit: rowsPerPage
+            limit: rowsPerPage,
+            orderDir,
+            orderBy
         });
-    }, [page, rowsPerPage]);
+    }, [page, rowsPerPage, orderDir, orderBy]);
 
     const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setPage(newPage);
@@ -78,6 +89,11 @@ const BooksContainer: React.FunctionComponent = () => {
         history.push(`/books/${bookId}`);
     };
 
+    const handleChangeOrder = (orderByValue: string) => {
+        setOrderDir(orderDir === 'asc' ? 'desc' : 'asc');
+        setOrderBy(orderByValue);
+    };
+
     return (
         <>
             <Toolbar />
@@ -85,21 +101,46 @@ const BooksContainer: React.FunctionComponent = () => {
                 <Table className={classes.table} size="small">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell align="left">Description</TableCell>
-                            <TableCell align="left">Pages</TableCell>
+                            <TableCell className={classes.tableCell} align="left" onClick={() => handleChangeOrder('title')}>
+                                <Box display="flex" alignItems="center" >
+                                    Title
+                                    {orderBy === 'title' && (orderDir === 'asc'
+                                        ? <ExpandLessIcon  />
+                                        : <ExpandMore />
+                                    )}
+                                </Box>
+                            </TableCell>
+                            <TableCell className={classes.tableCell} align="left" onClick={() => handleChangeOrder('subtitle')}>
+                                <Box display="flex" alignItems="center">
+                                    Description
+                                    {orderBy === 'subtitle' && (
+                                        orderDir === 'asc'
+                                        ? <ExpandLessIcon  />
+                                        : <ExpandMore />
+                                    )}
+                                </Box>
+                            </TableCell>
+                            <TableCell className={classes.tableCell} align="left" onClick={() => handleChangeOrder('pages')}>
+                                <Box display="flex" alignItems="center">
+                                    Pages
+                                    {orderBy === 'pages' && (orderDir === 'asc'
+                                        ? <ExpandLessIcon  />
+                                        : <ExpandMore />
+                                    )}
+                                </Box>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {booksStore.books.map((book: BookType) => (
                             <TableRow className={classes.tableRow} hover key={book.book_id} onClick={() => handleChoosePage(book.book_id)}>
-                                <TableCell className={classes.titleCell} component="th" scope="row">
+                                <TableCell className={classes.titleCell}>
                                     {book.title}
                                 </TableCell>
                                 <TableCell align="left">
                                     {book.subtitle}
                                 </TableCell>
-                                <TableCell align="left">
+                                <TableCell align="left" >
                                     {book.pages}
                                 </TableCell>
                             </TableRow>

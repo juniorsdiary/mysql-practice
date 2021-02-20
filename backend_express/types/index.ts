@@ -16,3 +16,10 @@ export type TagType = {
     tag_id: number;
     tag_name: string;
 }
+
+export type GetAllBooksArgs = {
+    skip: number;
+    limit: number;
+    order?: string;
+    orderBy?: string;
+}

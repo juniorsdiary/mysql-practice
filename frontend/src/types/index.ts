@@ -12,6 +12,8 @@ export type BookType = {
 export type FetchBooksType = {
     skip: number;
     limit: number;
+    orderDir?: string;
+    orderBy?: string;
 }
 
 export type AuthorType = {

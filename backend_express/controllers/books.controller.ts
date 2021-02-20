@@ -8,10 +8,9 @@ import { getBookTags } from '../helpers/mysql/bookTag/getBookTags';
 import { BookType, TagType, AuthorType } from '../types';
 
 const getBooks = async (req: Request, res: Response) => {
-    const skip = (req.query as any).skip as number;
-    const limit = (req.query as any).limit as number;
+    const { skip, limit, order, orderBy } = req.query as any;
 
-    const books = await getAllBooks({ skip, limit });
+    const books = await getAllBooks({ skip, limit, order, orderBy });
 
     res.json(books);
 };

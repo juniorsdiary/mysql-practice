@@ -6,8 +6,8 @@ const initialState: { books: BookType[], count: number } = {
     count: 0,
 };
 
-export const getBooksFx = createEffect(async ({ skip, limit }: FetchBooksType): Promise<BookType[]> => {
-    const res = await fetch(`http://localhost:3000/books?skip=${skip}&limit=${limit}`);
+export const getBooksFx = createEffect(async ({ skip, limit, orderDir, orderBy}: FetchBooksType): Promise<BookType[]> => {
+    const res = await fetch(`http://localhost:3000/books?skip=${skip}&limit=${limit}&order=${orderDir || ''}&orderBy=${orderBy || ''}`);
 
     return res.json();
 });
