@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import { useStore } from 'effector-react';
 
 // material ui
@@ -8,7 +8,6 @@ import Typography from '@material-ui/core/Typography';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import Skeleton from '@material-ui/lab/Skeleton';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 // components
@@ -41,6 +40,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SingleBookContainer = () => {
     const classes = useStyles();
+    const history = useHistory();
     const singleBook = useStore<BookType>($singleBook);
     let { id } = useParams<any>();
 
@@ -60,6 +60,10 @@ const SingleBookContainer = () => {
         }
     }
 
+    const handleReadBook = () => {
+        history.push(`/books/${id}/reader`);
+    }
+
     return (
         <>
             <Toolbar />
@@ -68,34 +72,37 @@ const SingleBookContainer = () => {
                     <Typography variant="h3" noWrap>
                         {singleBook.title}
                     </Typography>
-                    {singleBook.book_id && singleBook.image_cover_link
-                        ? <PdfView sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}/0`} />
-                        : <Skeleton
-                            variant="rect"
-                            width={600}
-                            height={800}
-                        />
+                    {singleBook.book_id && singleBook.book_link &&
+                        <PdfView sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}`} page={0} />
                     }
                 </Box>
                 <div className={classes.root}>
-                    <input
-                        accept="application/pdf"
-                        className={classes.input}
-                        id="pdf-button-file"
-                        type="file"
-                        onChange={handleUploadBook}
-                    />
-                    <label htmlFor="pdf-button-file">
-                        <Button
-                            variant="contained"
-                            color="default"
-                            component="span"
-                            className={classes.button}
-                            startIcon={<CloudUploadIcon />}
-                        >
-                            Upload Book
+                    {singleBook.book_link ? (
+                        <Button onClick={handleReadBook} variant="contained" color='primary'>
+                            Read Book
                         </Button>
-                    </label>
+                    ) : (
+                        <>
+                            <input
+                                accept="application/pdf"
+                                className={classes.input}
+                                id="pdf-button-file"
+                                type="file"
+                                onChange={handleUploadBook}
+                            />
+                            <label htmlFor="pdf-button-file">
+                                <Button
+                                    variant="contained"
+                                    color="default"
+                                    component="span"
+                                    className={classes.button}
+                                    startIcon={<CloudUploadIcon />}
+                                >
+                                    Upload Book
+                                </Button>
+                            </label>
+                        </>
+                    )}
                 </div>
             </Box>
             <Box>

@@ -7,7 +7,6 @@ import { publishUploadBookResult } from '../broker/hello/publishers';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import { Readable } from 'stream';
 import { PDFDocument, PDFPage } from 'pdf-lib';
-import SendData = ManagedUpload.SendData;
 
 const uploadBook = (req: Request, res: Response) => {
     const pass = new stream.PassThrough();
@@ -29,7 +28,9 @@ const uploadBook = (req: Request, res: Response) => {
             }
         });
 
-        res.end();
+        res.json({
+            book_link: data.Location,
+        });
     });
 
     pass.on('data', (chunk: Buffer) => {
@@ -57,7 +58,9 @@ const uploadBook = (req: Request, res: Response) => {
                 Body: stream
             };
 
-            s3Client.upload(params);
+            s3Client.upload(params, (err: Error) => {
+                if (err) console.log(err);
+            });
         });
 
         await Promise.all(uploadPages);
@@ -89,7 +92,7 @@ const getBookCover = async (req: Request, res: Response) => {
 
 const getBookPage = async (req: Request, res: Response) => {
     const { book_id, page_number } = req.params;
-
+    console.log(`uploads/books/${book_id}/pages/${page_number}.pdf`);
     const params = {
         Bucket: awsConfig.bucketName,
         Key: `uploads/books/${book_id}/pages/${page_number}.pdf`,

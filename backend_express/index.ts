@@ -19,7 +19,7 @@ app.use(ROUTES_NAMES.BOOKS, booksRoute);
 
 (async () => {
     app.listen(serverConfig.backendPort, async () => {
-        // await initConsumers();
+        await initConsumers();
 
         logger.info(`Server is running http://localhost:${serverConfig.backendPort}`);
     });

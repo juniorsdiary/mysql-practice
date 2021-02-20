@@ -4,6 +4,7 @@ export const executePromiseQueue = (promiseQueue: any[]) => {
         let promise = promiseQueue.reduce((prev, task) => {
             return prev.then((result: any) => {
                 results.push(result);
+                console.log(task);
                 return task();
             });
         }, Promise.resolve());
