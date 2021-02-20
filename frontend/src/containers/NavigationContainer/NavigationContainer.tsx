@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import Toolbar from "@material-ui/core/Toolbar";
 import Drawer from "@material-ui/core/Drawer";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const links = [
     { href: '/books', title: "Books" },
@@ -13,7 +13,7 @@ const links = [
     { href: '/tags', title: "Tags" },
 ];
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         drawer: {
             width: 200,

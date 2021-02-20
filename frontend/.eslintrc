@@ -14,7 +14,7 @@
         "vars": "all",
         "args": "all",
         "varsIgnorePattern": "^jsx$",
-        "argsIgnorePattern": "[Ii]gnored$"
+        "argsIgnorePattern": "([Ii]gnored|_)$"
       }
     ],
     "@typescript-eslint/no-use-before-define": "off",

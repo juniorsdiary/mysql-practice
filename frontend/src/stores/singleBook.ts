@@ -32,11 +32,10 @@ export const uploadBook = createEffect(async (params: any) => {
     return res.json();
 });
 
-
 export const $singleBook = createStore<BookType>(initialState)
     .on(getCertainBook.pending, () => initialState)
-    .on(getCertainBook.doneData, (state, data) => data)
-    .on(uploadBookImage.doneData, (state, data) => data)
+    .on(getCertainBook.doneData, (_, data) => data)
+    .on(uploadBookImage.doneData, (_, data) => data)
     .on(uploadBook.doneData, (state, data) => ({...state, book_link: data.book_link }));
 
 export const singleBookApi = createApi($singleBook, {
@@ -45,11 +44,11 @@ export const singleBookApi = createApi($singleBook, {
 
 const setBook = (state: BookType, book: BookType) => state.book_id !== book.book_id ? book : state;
 
-// @ts-ignore
-getCertainBook.finally.watch(({ result, error }) => {
-    if (error) {
-        console.log('handler rejected', error)
-    } else {
-        singleBookApi.setBook(result);
+getCertainBook.finally.watch((data) => {
+    if (data.status === "fail" && data.error) {
+        console.log('handler rejected', data.error);
+    }
+    if (data.status === "done" && data.result) {
+        singleBookApi.setBook(data.result);
     }
 })

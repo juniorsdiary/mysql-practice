@@ -9,8 +9,8 @@ const routes = [
     { path: '/books', component: BooksContainer },
     { path: '/books/:id', component: SingleBookContainer },
     { path: '/books/:id/reader', component: ReaderContainer },
-    { path: '/authors', component: () => <div>Authors</div> },
-    { path: '/authors/:id', component: () => <div>Author Single</div> },
+    { path: '/authors', component: function Authors() { return <div>Authors</div> } },
+    { path: '/authors/:id', component: function SingleAuthor() { return <div>Author Single</div> } },
 ];
 
 const RoutesContainer = () => {

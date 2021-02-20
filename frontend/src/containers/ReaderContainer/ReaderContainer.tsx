@@ -18,7 +18,7 @@ import { BookType } from '../../types';
 
 const ReaderContainer = () => {
     const singleBook = useStore<BookType>($singleBook);
-    let { id } = useParams<any>();
+    const { id } = useParams<any>();
 
     const [page, setPage] = useState<number>(0);
 
@@ -28,7 +28,7 @@ const ReaderContainer = () => {
         })();
     }, []);
 
-    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    const handleChange = (_: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     }
 

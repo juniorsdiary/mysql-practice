@@ -42,7 +42,7 @@ const SingleBookContainer = () => {
     const classes = useStyles();
     const history = useHistory();
     const singleBook = useStore<BookType>($singleBook);
-    let { id } = useParams<any>();
+    const { id } = useParams<any>();
 
     useEffect(() => {
         (async () => {

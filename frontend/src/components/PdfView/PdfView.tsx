@@ -1,16 +1,13 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as PDFjs from 'pdfjs-dist';
-import { PDFPageProxy } from 'pdfjs-dist/types/display/api';
+import { PDFPageProxy, RenderParameters } from 'pdfjs-dist/types/display/api';
 
 import Skeleton from '@material-ui/lab/Skeleton';
 
-type PdfViewProps = {
-    sourceDocument: string;
-    page: number;
-}
+import { PdfViewProps } from './types';
 
-const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
-    const [documentSource, setDocumentSource] = useState<string | ArrayBuffer | null | undefined>('');
+const PdfView: React.FunctionComponent<PdfViewProps> = ({ sourceDocument, page }: PdfViewProps) => {
+    const [documentSource, setDocumentSource] = useState<string | null | undefined>('');
     const renderCanvas = useRef<HTMLCanvasElement>(null);
 
     const handleGetDocumentSource = async (path: string) => {
@@ -19,7 +16,7 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
         const reader = new FileReader();
 
         reader.onload = function(evt: ProgressEvent<FileReader>) {
-            setDocumentSource(evt?.target?.result)
+            setDocumentSource(evt?.target?.result as string);
         };
 
         reader.readAsDataURL(blob);
@@ -40,7 +37,6 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
     useEffect(() => {
         (async () => {
             if (documentSource) {
-                // @ts-ignore
                 const loadingTask = PDFjs.getDocument(documentSource);
                 const data = await loadingTask.promise;
                 const page: PDFPageProxy = await data.getPage(1);
@@ -53,13 +49,14 @@ const PdfView = ({ sourceDocument, page }: PdfViewProps) => {
                 canvas && (canvas.height = viewport.height);
                 canvas && (canvas.width = viewport.width);
 
-                const renderContext = {
-                    canvasContext: context,
-                    viewport,
-                };
+                if (context) {
+                    const renderContext: RenderParameters = {
+                        canvasContext: context,
+                        viewport,
+                    };
 
-                // @ts-ignore
-                page.render(renderContext);
+                    page.render(renderContext);
+                }
             }
         })()
     }, [documentSource]);

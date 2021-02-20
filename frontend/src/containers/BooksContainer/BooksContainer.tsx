@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from 'effector-react';
 import { useHistory } from 'react-router-dom';
 
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 // components
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,7 +21,7 @@ import { $books, getBooksFx } from '../../stores/books';
 // types
 import { BookType } from '../../types';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
     createStyles({
         table: {
             maxWidth: 800,
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function BooksContainer() {
+const BooksContainer: React.FunctionComponent = () => {
     const history = useHistory();
 
     const classes = useStyles();
@@ -65,7 +65,7 @@ function BooksContainer() {
         });
     }, [page, rowsPerPage]);
 
-    const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
         setPage(newPage);
     };
 
