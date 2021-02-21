@@ -91,7 +91,7 @@ const DataTable = ({ data, onChangeOrder, onChangePage, onChangeRowsPerPage, onC
                         <TableRow className={classes.tableRow} hover key={book.id} onClick={() => onChoosePage(book.id)}>
                             {data?.columns?.map(column => {
                                 return (
-                                    <TableCell key={column.key} align="left" className={classes.titleCell}>
+                                    <TableCell key={column.key} align="left">
                                         {book[column.key as BookKeysEnum & AuthorKeysEnum]}
                                     </TableCell>
                                 );
