@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Toolbar from '@material-ui/core/Toolbar';
 import { $authors, getAuthorsFx } from '../../stores/authors';
 
 import { useStore } from 'effector-react';
@@ -52,8 +51,7 @@ const AuthorsContainer: React.FunctionComponent = () => {
     };
 
     return (
-        <div>
-            <Toolbar />
+        <>
             <DataTable
                 data={{
                     columns: [
@@ -73,7 +71,7 @@ const AuthorsContainer: React.FunctionComponent = () => {
                 onChangeRowsPerPage={handleChangeRowsPerPage}
                 onChoosePage={handleChoosePage}
             />
-        </div>
+        </>
     );
 };
 

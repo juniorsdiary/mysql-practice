@@ -34,9 +34,11 @@ export type FetchBooksType = {
 
 export type AuthorType = {
     id: number;
+    author_id: number;
     first_name: string;
     last_name: string;
     middle_name: string;
+    books?: BookType[];
 }
 
 export type TagType = {

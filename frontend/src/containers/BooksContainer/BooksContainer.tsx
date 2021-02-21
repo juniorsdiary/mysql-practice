@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from 'effector-react';
 import { useHistory } from 'react-router-dom';
 
-// components
-import Toolbar from '@material-ui/core/Toolbar';
-
 // store
 import { $books, getBooksFx } from '../../stores/books';
 
@@ -55,7 +52,6 @@ const BooksContainer: React.FunctionComponent = () => {
 
     return (
         <>
-            <Toolbar />
             <DataTable
                 data={{
                     columns: [

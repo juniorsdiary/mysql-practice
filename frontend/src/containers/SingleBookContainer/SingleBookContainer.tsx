@@ -1,9 +1,8 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import {useHistory, useParams} from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useStore } from 'effector-react';
 
 // material ui
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
@@ -38,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-const SingleBookContainer = () => {
+const SingleBookContainer = (): JSX.Element => {
     const classes = useStyles();
     const history = useHistory();
     const singleBook = useStore<BookType>($singleBook);
@@ -66,7 +65,6 @@ const SingleBookContainer = () => {
 
     return (
         <>
-            <Toolbar />
             <Box display="flex">
                 <Box display="flex" flexDirection={'column'}>
                     <Typography variant="h3" noWrap>

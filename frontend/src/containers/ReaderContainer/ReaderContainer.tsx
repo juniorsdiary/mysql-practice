@@ -11,7 +11,6 @@ import { PdfView } from '../../components/PdfView/PdfView';
 // material
 import Box from '@material-ui/core/Box';
 import Pagination from '@material-ui/lab/Pagination';
-import Toolbar from '@material-ui/core/Toolbar';
 
 // types
 import { BookType } from '../../types';
@@ -34,7 +33,6 @@ const ReaderContainer = () => {
 
     return (
         <>
-            <Toolbar />
             <Box>
                 <PdfView
                     sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.id}`}
