@@ -2,7 +2,7 @@ import { BookType } from '../types';
 import { createApi, createEffect, createStore } from 'effector';
 
 const initialState = {
-    book_id: 0,
+    id: 0,
     title: '',
     subtitle: '',
     pages: 0,
@@ -15,7 +15,7 @@ export const getCertainBook = createEffect(async (id: number) => {
 });
 
 export const uploadBookImage = createEffect(async (params: any) => {
-    const res = await fetch(`http://localhost:4000/upload/bookCover?book_id=${params.id}`, {
+    const res = await fetch(`http://localhost:4000/upload/bookCover?id=${params.id}`, {
         method: 'POST',
         body: params.data,
     });
@@ -42,7 +42,7 @@ export const singleBookApi = createApi($singleBook, {
     setBook: (state, data) => setBook(state, data)
 });
 
-const setBook = (state: BookType, book: BookType) => state.book_id !== book.book_id ? book : state;
+const setBook = (state: BookType, book: BookType) => state.id !== book.id ? book : state;
 
 getCertainBook.finally.watch((data) => {
     if (data.status === "fail" && data.error) {

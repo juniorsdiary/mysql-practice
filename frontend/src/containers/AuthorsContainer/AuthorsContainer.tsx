@@ -1,33 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Toolbar from '@material-ui/core/Toolbar';
+import { $authors, getAuthorsFx } from '../../stores/authors';
+
 import { useStore } from 'effector-react';
+import { DataTable } from '../../components/DataTable/DataTable';
 import { useHistory } from 'react-router-dom';
 
-// components
-import Toolbar from '@material-ui/core/Toolbar';
-
-// store
-import { $books, getBooksFx } from '../../stores/books';
-
-// types
-import { DataTable } from '../../components/DataTable/DataTable';
-
-const BooksContainer: React.FunctionComponent = () => {
+const AuthorsContainer: React.FunctionComponent = () => {
     const history = useHistory();
 
+    const authorsStore = useStore($authors);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-
     const [orderDir, setOrderDir] = useState<string>('asc');
     const [orderBy, setOrderBy] = useState<string>('');
 
-    const booksStore = useStore($books);
-
     useEffect(() => {
-        getBooksFx({ skip: page * rowsPerPage, limit: rowsPerPage });
+        (async () => {
+            await getAuthorsFx({
+                skip: page * rowsPerPage,
+                limit: rowsPerPage
+            });
+        })();
     }, []);
 
     useEffect(() => {
-        getBooksFx({
+        getAuthorsFx({
             skip: page * rowsPerPage,
             limit: rowsPerPage,
             orderDir,
@@ -41,11 +39,11 @@ const BooksContainer: React.FunctionComponent = () => {
 
     const handleChangeRowsPerPage = (rowsPerPage: number) => {
         setRowsPerPage(rowsPerPage);
-        setPage(0);
+        setPage(page);
     };
 
-    const handleChoosePage = (bookId: number) => {
-        history.push(`/books/${bookId}`);
+    const handleChoosePage = (authorId: number) => {
+        history.push(`/authors/${authorId}`);
     };
 
     const handleChangeOrder = (orderByValue: string) => {
@@ -54,29 +52,29 @@ const BooksContainer: React.FunctionComponent = () => {
     };
 
     return (
-        <>
+        <div>
             <Toolbar />
             <DataTable
                 data={{
                     columns: [
-                        { tableHeadName: 'Title', key: 'title'},
-                        { tableHeadName: 'Description', key: 'subtitle'},
-                        { tableHeadName: 'Pages', key: 'pages'},
+                        { tableHeadName: 'First Name', key: 'first_name'},
+                        { tableHeadName: 'Middle Name', key: 'middle_name'},
+                        { tableHeadName: 'Last Name', key: 'last_name'},
                     ],
                     orderBy,
                     orderDir,
-                    count: booksStore.count,
+                    count: authorsStore.count,
                     page,
                     rowsPerPage,
-                    list: booksStore.books,
+                    list: authorsStore.authors,
                 }}
                 onChangeOrder={handleChangeOrder}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
                 onChoosePage={handleChoosePage}
             />
-        </>
+        </div>
     );
-}
+};
 
-export { BooksContainer }
+export { AuthorsContainer };

@@ -37,7 +37,7 @@ const ReaderContainer = () => {
             <Toolbar />
             <Box>
                 <PdfView
-                    sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}`}
+                    sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.id}`}
                     page={page}
                 />
                 <Pagination

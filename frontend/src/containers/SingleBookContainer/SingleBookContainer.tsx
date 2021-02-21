@@ -72,8 +72,8 @@ const SingleBookContainer = () => {
                     <Typography variant="h3" noWrap>
                         {singleBook.title}
                     </Typography>
-                    {singleBook.book_id && singleBook.book_link &&
-                        <PdfView sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}`} page={0} />
+                    {singleBook.id && singleBook.book_link &&
+                        <PdfView sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.id}`} page={0} />
                     }
                 </Box>
                 <div className={classes.root}>

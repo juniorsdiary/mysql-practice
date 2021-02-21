@@ -13,7 +13,7 @@ const getAllBooks = async ({ skip, limit, order, orderBy }: GetAllBooksArgs): Pr
     const count = await executeMysqlQuery(`SELECT COUNT(*) FROM ${BOOKS_TABLE_NAME}`, []);
 
     return {
-        books,
+        books: books.map((book: BookType) => ({ ...book, id: book.book_id })),
         count: count[0]['COUNT(*)'],
     }
 };

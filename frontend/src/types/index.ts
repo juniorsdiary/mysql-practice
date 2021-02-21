@@ -1,5 +1,5 @@
 export type BookType = {
-    book_id: number;
+    id: number;
     title: string;
     pages: number;
     subtitle?: string;
@@ -7,6 +7,22 @@ export type BookType = {
     book_link?: string;
     authors?: AuthorType[];
     tags?: TagType[];
+}
+
+export enum BookKeysEnum {
+    id = 'id',
+    title = 'title',
+    pages = 'pages',
+    subtitle = 'subtitle',
+    book_link = 'book_link',
+    authors = 'authors',
+    tags = 'tags',
+}
+
+export enum AuthorKeysEnum {
+    first_name = 'first_name',
+    last_name = 'last_name',
+    middle_name = 'middle_name',
 }
 
 export type FetchBooksType = {
@@ -17,7 +33,7 @@ export type FetchBooksType = {
 }
 
 export type AuthorType = {
-    author_id: number;
+    id: number;
     first_name: string;
     last_name: string;
     middle_name: string;
