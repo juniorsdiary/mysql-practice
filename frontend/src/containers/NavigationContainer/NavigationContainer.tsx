@@ -7,7 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Drawer from "@material-ui/core/Drawer";
 import { createStyles, makeStyles } from "@material-ui/core/styles";
 
-const links = [
+export const links = [
     { href: '/books', title: "Books" },
     { href: '/authors', title: "Authors" },
     { href: '/tags', title: "Tags" },
