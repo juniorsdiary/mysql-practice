@@ -3,3 +3,4 @@
 /frontend/node_modules
 /uploader/node_modules
 /.idea
+frontend/.eslintcache

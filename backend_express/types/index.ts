@@ -15,11 +15,30 @@ export type AuthorType = {
 export type TagType = {
     tag_id: number;
     tag_name: string;
+    books?: BookType[];
 }
 
-export type GetAllBooksArgs = {
+export type GetEntityArgs = {
     skip: number;
     limit: number;
     order?: string;
     orderBy?: string;
 }
+
+export type SelectEntityResponse = {
+    data: BookType[] | AuthorType[] | TagType[];
+    count: number;
+}
+
+export type TagsResponseType = {
+    tags: TagType[];
+    count: number;
+};
+
+export type BuildSelectQueryArgsType = {
+    tableName: string;
+    skip?: number;
+    limit?: number;
+    order?: string;
+    orderBy?: string;
+};

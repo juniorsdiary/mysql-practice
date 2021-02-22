@@ -1,19 +1,23 @@
 import { executeMysqlQuery } from '../executeMysqlQuery';
 import { AUTHORS_TABLE_NAME } from '../TABLES';
-import { AuthorType, GetAllBooksArgs} from '../../../types';
+import { AuthorType, GetEntityArgs, SelectEntityResponse } from '../../../types';
+import { buildSelectEntityQuery } from '../buildSelectEntityQuery';
 
-const getAllAuthors = async ({ skip, limit, order, orderBy }: GetAllBooksArgs): Promise<{ authors: AuthorType[], count: number }> => {
-    const baseQuery = `SELECT * FROM ${AUTHORS_TABLE_NAME}`;
+const getAllAuthors = async ({ skip, limit, order, orderBy }: GetEntityArgs): Promise<SelectEntityResponse> => {
+    const selectEntityQuery = buildSelectEntityQuery({
+        tableName: AUTHORS_TABLE_NAME,
+        skip,
+        limit,
+        order,
+        orderBy
+    });
 
-    const orderQuery = order && orderBy ? `${baseQuery} ORDER BY ${orderBy} ${order.toUpperCase()}` : baseQuery;
-    const paginationQuery = skip && limit ? `${orderQuery} LIMIT ${limit} OFFSET ${skip}` : orderQuery;
-
-    const authors = await executeMysqlQuery(paginationQuery, []);
+    const authors = await executeMysqlQuery(selectEntityQuery, []);
 
     const count = await executeMysqlQuery(`SELECT COUNT(*) FROM ${AUTHORS_TABLE_NAME}`, []);
 
     return {
-        authors: authors.map((book: AuthorType) => ({ ...book, id: book.author_id })),
+        data: authors.map((book: AuthorType) => ({ ...book, id: book.author_id })),
         count: count[0]['COUNT(*)'],
     }
 };

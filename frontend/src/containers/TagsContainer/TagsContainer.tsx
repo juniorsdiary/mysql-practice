@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useStore } from 'effector-react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useStore } from 'effector-react';
 
-// store
-import { $books, getBooksFx } from '../../stores/books';
-
-// types
 import { DataTable } from '../../components/DataTable/DataTable';
 
-const BooksContainer: React.FunctionComponent = () => {
+import { $tags, getTagsFx } from '../../stores/tags';
+
+const TagsContainer = (): JSX.Element => {
     const history = useHistory();
 
+    const tagsStore = useStore($tags);
     const [page, setPage] = useState<number>(0);
     const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-
     const [orderDir, setOrderDir] = useState<string>('asc');
     const [orderBy, setOrderBy] = useState<string>('');
 
-    const booksStore = useStore($books);
-
     useEffect(() => {
-        getBooksFx({
+        getTagsFx({
             skip: page * rowsPerPage,
             limit: rowsPerPage,
             orderDir,
@@ -34,11 +30,11 @@ const BooksContainer: React.FunctionComponent = () => {
 
     const handleChangeRowsPerPage = (rowsPerPage: number) => {
         setRowsPerPage(rowsPerPage);
-        setPage(0);
+        setPage(page);
     };
 
-    const handleChoosePage = (bookId: number) => {
-        history.push(`/books/${bookId}`);
+    const handleChoosePage = (authorId: number) => {
+        history.push(`/tags/${authorId}`);
     };
 
     const handleChangeOrder = (orderByValue: string) => {
@@ -51,16 +47,16 @@ const BooksContainer: React.FunctionComponent = () => {
             <DataTable
                 data={{
                     columns: [
-                        { tableHeadName: 'Title', key: 'title'},
-                        { tableHeadName: 'Description', key: 'subtitle'},
-                        { tableHeadName: 'Pages', key: 'pages'},
+                        { tableHeadName: 'Tag id', key: 'tag_id'},
+                        { tableHeadName: 'Tag Name', key: 'tag_name'},
+                        { tableHeadName: 'Books', key: 'books'},
                     ],
                     orderBy,
                     orderDir,
-                    count: booksStore.count,
+                    count: tagsStore.count,
                     page,
                     rowsPerPage,
-                    list: booksStore.books || [],
+                    list: tagsStore.tags || [],
                 }}
                 onChangeOrder={handleChangeOrder}
                 onChangePage={handleChangePage}
@@ -69,6 +65,6 @@ const BooksContainer: React.FunctionComponent = () => {
             />
         </>
     );
-}
+};
 
-export { BooksContainer }
+export { TagsContainer };

@@ -62,7 +62,7 @@ const SingleAuthorContainer = (): JSX.Element => {
                     Middle Name:&nbsp;
                 </Typography>
                 <Typography display='inline' noWrap>
-                    {singleAuthor?.middle_name || 'Empty'}
+                    {singleAuthor?.middle_name || '-'}
                 </Typography>
             </Box>
             <Box display="flex" alignItems="center">

@@ -15,15 +15,6 @@ const AuthorsContainer: React.FunctionComponent = () => {
     const [orderBy, setOrderBy] = useState<string>('');
 
     useEffect(() => {
-        (async () => {
-            await getAuthorsFx({
-                skip: page * rowsPerPage,
-                limit: rowsPerPage
-            });
-        })();
-    }, []);
-
-    useEffect(() => {
         getAuthorsFx({
             skip: page * rowsPerPage,
             limit: rowsPerPage,
@@ -64,7 +55,7 @@ const AuthorsContainer: React.FunctionComponent = () => {
                     count: authorsStore.count,
                     page,
                     rowsPerPage,
-                    list: authorsStore.authors,
+                    list: authorsStore.authors || [],
                 }}
                 onChangeOrder={handleChangeOrder}
                 onChangePage={handleChangePage}

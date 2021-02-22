@@ -6,4 +6,6 @@ const booksRoute = express.Router();
 booksRoute.get('/', booksController.getBooks);
 booksRoute.get('/:id', booksController.getBook);
 
-export { booksRoute }
+export {
+    booksRoute
+};

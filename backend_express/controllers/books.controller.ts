@@ -7,16 +7,23 @@ import { getBookTags } from '../helpers/mysql/bookTag/getBookTags';
 
 import { BookType, TagType, AuthorType } from '../types';
 
-const getBooks = async (req: Request, res: Response) => {
+const getBooks = async (req: Request, res: Response): Promise<unknown> => {
     const { skip, limit, order, orderBy } = req.query as any;
 
-    const books = await getAllBooks({ skip, limit, order, orderBy });
+    const books = await getAllBooks({
+        skip,
+        limit,
+        order,
+        orderBy
+    });
 
     res.json(books);
+
+    return;
 };
 
-const getBook = async (req: Request, res: Response) => {
-    const bookId = req.params.id
+const getBook = async (req: Request, res: Response): Promise<unknown> => {
+    const bookId = req.params.id;
     const book: BookType[] = await getOneBook(bookId);
     const bookAuthors: AuthorType[] = await getBookAuthors(bookId);
     const bookTags: TagType[] = await getBookTags(bookId);
@@ -26,6 +33,8 @@ const getBook = async (req: Request, res: Response) => {
         authors: bookAuthors,
         tags: bookTags,
     });
+
+    return;
 };
 
 const booksController = {

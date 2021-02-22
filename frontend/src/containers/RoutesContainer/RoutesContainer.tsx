@@ -8,6 +8,8 @@ import { SingleBookContainer } from '../SingleBookContainer/SingleBookContainer'
 import { ReaderContainer } from '../ReaderContainer/ReaderContainer';
 import { AuthorsContainer } from '../AuthorsContainer/AuthorsContainer';
 import { SingleAuthorContainer } from '../SingleAuthorContainer/SingleAuthorContainer';
+import { TagsContainer } from '../TagsContainer/TagsContainer';
+import { SingleTagContainer } from '../SingleTagContainer/SingleTagContainer';
 
 const routes = [
     { path: '/books', component: BooksContainer },
@@ -15,6 +17,8 @@ const routes = [
     { path: '/books/:id/reader', component: ReaderContainer },
     { path: '/authors', component: AuthorsContainer },
     { path: '/authors/:id', component: SingleAuthorContainer },
+    { path: '/tags', component: TagsContainer },
+    { path: '/tags/:id', component: SingleTagContainer },
 ];
 
 const RoutesContainer = (): JSX.Element => {
