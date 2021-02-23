@@ -1,5 +1,6 @@
 export type BookType = {
     id: number;
+    book_id: number;
     title: string;
     pages: number;
     subtitle?: string;
@@ -19,6 +20,7 @@ export type AuthorType = {
 };
 
 export type TagType = {
+    id: number;
     tag_id: number;
     tag_name: string;
     books: BookType[];

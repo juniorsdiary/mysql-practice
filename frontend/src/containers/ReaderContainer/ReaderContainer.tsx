@@ -34,10 +34,12 @@ const ReaderContainer = () => {
     return (
         <>
             <Box>
-                <PdfView
-                    sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.id}`}
-                    page={page}
-                />
+                {singleBook.book_id && (
+                    <PdfView
+                        sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}`}
+                        page={page}
+                    />
+                )}
                 <Pagination
                     count={singleBook.pages}
                     page={page}

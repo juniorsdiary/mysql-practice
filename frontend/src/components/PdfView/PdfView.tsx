@@ -24,10 +24,6 @@ const PdfView: React.FunctionComponent<PdfViewProps> = ({ sourceDocument, page }
 
     useEffect(() => {
         PDFjs.GlobalWorkerOptions.workerSrc = '//cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/build/pdf.worker.js';
-
-        (async () => {
-            await handleGetDocumentSource(`${sourceDocument}/${page}`);
-        })()
     }, []);
 
     useEffect(() => {

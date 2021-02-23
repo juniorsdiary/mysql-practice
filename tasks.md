@@ -1,4 +1,3 @@
-1. Add Authors pages and Tags pages
 1. For every entity make links to single page
 1. Add cancel upload
    

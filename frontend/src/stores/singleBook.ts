@@ -3,6 +3,7 @@ import { createApi, createEffect, createStore } from 'effector';
 
 const initialState = {
     id: 0,
+    book_id: 0,
     title: '',
     subtitle: '',
     pages: 0,
