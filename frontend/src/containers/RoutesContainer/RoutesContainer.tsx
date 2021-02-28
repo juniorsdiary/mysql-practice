@@ -11,7 +11,7 @@ import { SingleAuthorContainer } from '../SingleAuthorContainer/SingleAuthorCont
 import { TagsContainer } from '../TagsContainer/TagsContainer';
 import { SingleTagContainer } from '../SingleTagContainer/SingleTagContainer';
 
-const routes = [
+export const routes = [
     { path: '/books', component: BooksContainer },
     { path: '/books/:id', component: SingleBookContainer },
     { path: '/books/:id/reader', component: ReaderContainer },

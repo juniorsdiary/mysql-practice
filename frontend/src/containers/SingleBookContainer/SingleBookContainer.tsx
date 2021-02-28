@@ -1,5 +1,5 @@
-import React, { ChangeEvent, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useMemo, ChangeEvent, useEffect } from 'react';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useStore } from 'effector-react';
 
 // material ui
@@ -8,6 +8,7 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { List, ListItem } from '@material-ui/core';
 
 // components
 import { PdfView } from '../../components/PdfView/PdfView';
@@ -16,7 +17,7 @@ import { PdfView } from '../../components/PdfView/PdfView';
 import { $singleBook, getCertainBook, uploadBook } from '../../stores/singleBook';
 
 // types
-import { BookType } from '../../types';
+import { AuthorType, BookType, TagType } from '../../types';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -62,6 +63,26 @@ const SingleBookContainer = (): JSX.Element => {
     const handleReadBook = () => {
         history.push(`/books/${id}/reader`);
     }
+
+    const renderAuthorsList = useMemo(() => {
+        return singleBook?.authors?.map((author: AuthorType) => {
+            return (
+                <ListItem button component={(props) => <Link to={`/authors/${author.author_id}`} {...props} />} key={author.author_id}>
+                    {`${author.first_name} ${author.middle_name || ''} ${author.last_name}`}
+                </ListItem>
+            );
+        });
+    }, [singleBook?.authors]);
+
+    const renderTagsList = useMemo(() => {
+        return singleBook?.tags?.map((tag: TagType) => {
+            return (
+                <ListItem button component={(props) => <Link to={`/tags/${tag.tag_id}`} {...props} />} key={tag.tag_id}>
+                    {tag.tag_name}
+                </ListItem>
+            );
+        }) || 'No Tags';
+    }, [singleBook?.tags]);
 
     return (
         <>
@@ -112,26 +133,26 @@ const SingleBookContainer = (): JSX.Element => {
                     {singleBook.subtitle}
                 </Typography>
             </Box>
-            <Box>
+            <Box display="inline-flex" flexDirection="column">
                 <Typography display='inline' className={classes.subtitle} variant="subtitle1" noWrap>
                     Authors:
                 </Typography>
-                &nbsp;
-                <Typography display='inline' noWrap>
-                    {singleBook?.authors?.map(author => `${author.first_name} ${author.middle_name || ''} ${author.last_name}`).join(', ') || 'No Authors'}
-                </Typography>
+                <List dense>
+                    {renderAuthorsList}
+                </List>
             </Box>
-            <Box>
+            <Box display="inline-flex" flexDirection="column">
                 <Typography display='inline' className={classes.subtitle} variant="subtitle1" noWrap>
                     Tags:
                 </Typography>
-                &nbsp;
-                <Typography display='inline' noWrap>
-                    {singleBook?.tags?.map(tag => tag.tag_name).join(', ') || 'No Tags'}
-                </Typography>
+                <List dense>
+                    {renderTagsList}
+                </List>
             </Box>
         </>
     );
 };
 
-export { SingleBookContainer };
+export {
+    SingleBookContainer
+};

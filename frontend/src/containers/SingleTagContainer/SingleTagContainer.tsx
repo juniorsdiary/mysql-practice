@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useStore } from 'effector-react';
 import { $singleTag, getCertainTag } from '../../stores/singleTag';
 import { TagType } from '../../types';
-import { Box, List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { Box, List, ListItem, Typography } from '@material-ui/core';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -18,7 +18,6 @@ const SingleTagContainer = (): JSX.Element => {
     const classes = useStyles();
     const { id } = useParams<any>();
     const singleTag = useStore<TagType>($singleTag);
-    const history = useHistory();
 
     useEffect(() => {
         (async () => {
@@ -26,16 +25,10 @@ const SingleTagContainer = (): JSX.Element => {
         })()
     }, []);
 
-    const handleChooseBook = (bookId: number) => {
-        history.push(`/books/${bookId}`);
-    }
-
     const renderBooksList = useMemo(() => {
         return singleTag.books.map(book => (
-                <ListItem key={book.id} button onClick={() => handleChooseBook(book.book_id)}>
-                    <ListItemText>
-                        {book.title}
-                    </ListItemText>
+                <ListItem button component={(props) => <Link to={`/books/${book.book_id}`} {...props} />} key={book.book_id}>
+                    {book.title}
                 </ListItem>
             )
         );

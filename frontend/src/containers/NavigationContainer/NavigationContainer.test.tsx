@@ -4,9 +4,10 @@ import { NavigationContainer, links } from './NavigationContainer';
 
 import ListItem from '@material-ui/core/ListItem';
 
+const wrapper = shallow(<NavigationContainer />);
+
 describe('<NavigationContainer />', () => {
-    it('renders  <AppBar /> component', () => {
-        const wrapper = shallow(<NavigationContainer />);
+    it('renders  <ListItem /> component', () => {
         expect(wrapper.find(ListItem)).toHaveLength(links.length);
     });
 })

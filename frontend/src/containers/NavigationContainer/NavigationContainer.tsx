@@ -28,7 +28,7 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-const NavigationContainer = () => {
+const NavigationContainer = (): JSX.Element => {
     const classes = useStyles();
 
     return (
