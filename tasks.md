@@ -1,6 +1,10 @@
-1. For every entity make links to single page
 1. Add cancel upload
+1. Pdf to Png converter with pdfjs
+1. Search
+1. Add cyrillic support
+1. Add more books
    
+
 1. Add unit-testing
 1. Add language support
 1. Authentication/Authorization
