@@ -1,81 +1,52 @@
 import { Request, Response } from 'express';
+import * as uuid from 'uuid';
 import { s3Client } from '../connections/s3Connection';
 import * as stream from 'stream';
 import { awsConfig } from '../config/serverConfig';
-import { ManagedUpload } from 'aws-sdk/lib/s3/managed_upload';
-import { publishUploadBookResult } from '../broker/hello/publishers';
+import { publishUploadBookResult } from '../broker/books/publishers';
 import { GetObjectOutput } from 'aws-sdk/clients/s3';
 import { Readable } from 'stream';
-import { PDFDocument, PDFPage } from 'pdf-lib';
 
-const uploadBook = (req: Request, res: Response) => {
+import { uploadBookToS3 } from '../utils/books/uploadBookToS3';
+import { uploadPages } from '../utils/books/uploadPages';
+
+const uploadBook = async (req: Request, res: Response): Promise<void> => {
     const pass = new stream.PassThrough();
     const { book_id } = req.query;
-    const chunks: any[] = [];
-
-    const params = {
-        Bucket: awsConfig.bucketName,
-        // @ts-ignore
-        Key: `uploads/books/${book_id}/${req.fileName}`,
-        Body: pass
-    };
-
-    s3Client.upload(params, async (err: Error, data: ManagedUpload.SendData) => {
-        await publishUploadBookResult({
-            message: {
-                book_id,
-                book_link: data.Location,
-            }
-        });
-
-        res.json({
-            book_link: data.Location,
-        });
-    });
+    const chunks: Buffer[] = [];
+    const id = uuid.v4();
 
     pass.on('data', (chunk: Buffer) => {
-        if (chunk.length) {
-            chunks.push(chunk);
-        }
+        if (chunk.length) chunks.push(chunk)
     });
 
     pass.on('end', async () => {
         const fileBuffer = Buffer.concat(chunks);
-        const initialDocument = await PDFDocument.load(fileBuffer);
-
-        const uploadPages = initialDocument.getPages().map(async (page: PDFPage, i: number) => {
-            const docForPage = await PDFDocument.create();
-            const [newPage] = await docForPage.copyPages(initialDocument, [i]);
-            docForPage.addPage(newPage);
-            const docBytes = await docForPage.save();
-            const pageBuffer = Buffer.from(docBytes.buffer)
-            const stream = Readable.from(pageBuffer);
-
-            const params = {
-                Bucket: awsConfig.bucketName,
-                // @ts-ignore
-                Key: `uploads/books/${book_id}/pages/${i}.pdf`,
-                Body: stream
-            };
-
-            s3Client.upload(params, (err: Error) => {
-                if (err) console.log(err);
-            });
-        });
-
-        await Promise.all(uploadPages);
+        await uploadPages(fileBuffer, book_id as string);
     });
-
     // @ts-ignore
     req.file.pipe(pass);
+
+    const bookLink = await uploadBookToS3(pass, `uploads/books/${book_id}/${id}`);
+
+    await publishUploadBookResult({
+        message: {
+            book_id,
+            book_link: bookLink,
+        }
+    });
+
+    res.json({
+        book_link: bookLink,
+    });
 }
 
-const getBookCover = async (req: Request, res: Response) => {
+const getBookCover = async (req: Request, res: Response): Promise<void> => {
     const { book_id } = req.params;
 
     const params = {
         Bucket: awsConfig.bucketName,
-        Key: `uploads/books/${book_id}/sign.png`,
+        Key: `uploads/books/${book_id}/bookCover.png`,
     };
 
     const objectStream = await s3Client.getObject(params).promise() as GetObjectOutput;
@@ -90,9 +61,9 @@ const getBookCover = async (req: Request, res: Response) => {
     }
 };
 
-const getBookPage = async (req: Request, res: Response) => {
+const getBookPage = async (req: Request, res: Response): Promise<void> => {
     const { book_id, page_number } = req.params;
-    console.log(`uploads/books/${book_id}/pages/${page_number}.pdf`);
+
     const params = {
         Bucket: awsConfig.bucketName,
         Key: `uploads/books/${book_id}/pages/${page_number}.pdf`,

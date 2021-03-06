@@ -1,26 +1,22 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import * as PDFjs from 'pdfjs-dist';
 import { PDFPageProxy, RenderParameters } from 'pdfjs-dist/types/display/api';
 
 import Skeleton from '@material-ui/lab/Skeleton';
 
 import { PdfViewProps } from './types';
+import { blobToDataUrl } from '../../utils/blobToDataUrl';
 
 const PdfView: React.FunctionComponent<PdfViewProps> = ({ sourceDocument, page }: PdfViewProps) => {
     const [documentSource, setDocumentSource] = useState<string | null | undefined>('');
     const renderCanvas = useRef<HTMLCanvasElement>(null);
 
-    const handleGetDocumentSource = async (path: string) => {
+    const handleGetDocumentSource = useCallback(async (path: string) => {
         const documentResponse = await fetch(path);
         const blob = await documentResponse.blob();
-        const reader = new FileReader();
-
-        reader.onload = function(evt: ProgressEvent<FileReader>) {
-            setDocumentSource(evt?.target?.result as string);
-        };
-
-        reader.readAsDataURL(blob);
-    };
+        const dataUrl = await blobToDataUrl(blob);
+        setDocumentSource(dataUrl);
+    }, []);
 
     useEffect(() => {
         PDFjs.GlobalWorkerOptions.workerSrc = '//cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/build/pdf.worker.js';

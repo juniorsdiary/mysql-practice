@@ -11,7 +11,7 @@ uploadRoute.post(
 );
 
 uploadRoute.get(
-    '/bookCover/:book_id',
+    '/getBookCover/:book_id',
     uploadController.getBookCover
 );
 

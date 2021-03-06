@@ -11,7 +11,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { List, ListItem } from '@material-ui/core';
 
 // components
-import { PdfView } from '../../components/PdfView/PdfView';
+import { Image } from '../../components/Image/Image';
 
 // stores
 import { $singleBook, getCertainBook, uploadBook } from '../../stores/singleBook';
@@ -91,37 +91,38 @@ const SingleBookContainer = (): JSX.Element => {
                     <Typography variant="h3" noWrap>
                         {singleBook.title}
                     </Typography>
-                    {singleBook.book_id && singleBook.book_link &&
-                        <PdfView sourceDocument={`http://localhost:4000/upload/getBookPage/${singleBook.book_id}`} page={0} />
+                    {singleBook.book_id && singleBook.image_cover_link &&
+                        <Image
+                            src={`http://localhost:4000/upload/getBookCover/${singleBook.book_id}`}
+                            width={600}
+                            height={800}
+                        />
                     }
                 </Box>
                 <div className={classes.root}>
-                    {singleBook.book_link ? (
+                    <>
                         <Button onClick={handleReadBook} variant="contained" color='primary'>
                             Read Book
                         </Button>
-                    ) : (
-                        <>
-                            <input
-                                accept="application/pdf"
-                                className={classes.input}
-                                id="pdf-button-file"
-                                type="file"
-                                onChange={handleUploadBook}
-                            />
-                            <label htmlFor="pdf-button-file">
-                                <Button
-                                    variant="contained"
-                                    color="default"
-                                    component="span"
-                                    className={classes.button}
-                                    startIcon={<CloudUploadIcon />}
-                                >
-                                    Upload Book
-                                </Button>
-                            </label>
-                        </>
-                    )}
+                        <input
+                            accept="application/pdf"
+                            className={classes.input}
+                            id="pdf-button-file"
+                            type="file"
+                            onChange={handleUploadBook}
+                        />
+                        <label htmlFor="pdf-button-file">
+                            <Button
+                                variant="contained"
+                                color="default"
+                                component="span"
+                                className={classes.button}
+                                startIcon={<CloudUploadIcon />}
+                            >
+                                Upload Book
+                            </Button>
+                        </label>
+                    </>
                 </div>
             </Box>
             <Box>
