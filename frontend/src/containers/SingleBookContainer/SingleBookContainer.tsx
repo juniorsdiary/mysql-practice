@@ -1,4 +1,4 @@
-import React, { useMemo, ChangeEvent, useEffect } from 'react';
+import React, { useMemo, ChangeEvent, useEffect, useCallback } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useStore } from 'effector-react';
 
@@ -50,7 +50,7 @@ const SingleBookContainer = (): JSX.Element => {
         })()
     }, []);
 
-    const handleUploadBook = async (e: ChangeEvent<HTMLInputElement>) => {
+    const handleUploadBook = useCallback(async (e: ChangeEvent<HTMLInputElement>) => {
         const formData = new FormData();
 
         const file = e?.target?.files?.length && e?.target?.files[0];
@@ -58,11 +58,11 @@ const SingleBookContainer = (): JSX.Element => {
             formData.append('book', file, file?.name);
             await uploadBook({ id, data: formData });
         }
-    }
+    }, [id]);
 
-    const handleReadBook = () => {
+    const handleReadBook = useCallback(() => {
         history.push(`/books/${id}/reader`);
-    }
+    }, [id]);
 
     const renderAuthorsList = useMemo(() => {
         return singleBook?.authors?.map((author: AuthorType) => {
@@ -84,6 +84,8 @@ const SingleBookContainer = (): JSX.Element => {
         }) || 'No Tags';
     }, [singleBook?.tags]);
 
+    console.log(singleBook);
+
     return (
         <>
             <Box display="flex">
@@ -91,6 +93,31 @@ const SingleBookContainer = (): JSX.Element => {
                     <Typography variant="h3" noWrap>
                         {singleBook.title}
                     </Typography>
+                    <div className={classes.root}>
+                        <>
+                            <Button onClick={handleReadBook} variant="contained" color='primary'>
+                                Read Book
+                            </Button>
+                            <input
+                                accept="application/pdf"
+                                className={classes.input}
+                                id="pdf-button-file"
+                                type="file"
+                                onChange={handleUploadBook}
+                            />
+                            <label htmlFor="pdf-button-file">
+                                <Button
+                                    variant="contained"
+                                    color="default"
+                                    component="span"
+                                    className={classes.button}
+                                    startIcon={<CloudUploadIcon />}
+                                >
+                                    Upload Book
+                                </Button>
+                            </label>
+                        </>
+                    </div>
                     {singleBook.book_id && singleBook.image_cover_link &&
                         <Image
                             src={`http://localhost:4000/upload/getBookCover/${singleBook.book_id}`}
@@ -99,32 +126,8 @@ const SingleBookContainer = (): JSX.Element => {
                         />
                     }
                 </Box>
-                <div className={classes.root}>
-                    <>
-                        <Button onClick={handleReadBook} variant="contained" color='primary'>
-                            Read Book
-                        </Button>
-                        <input
-                            accept="application/pdf"
-                            className={classes.input}
-                            id="pdf-button-file"
-                            type="file"
-                            onChange={handleUploadBook}
-                        />
-                        <label htmlFor="pdf-button-file">
-                            <Button
-                                variant="contained"
-                                color="default"
-                                component="span"
-                                className={classes.button}
-                                startIcon={<CloudUploadIcon />}
-                            >
-                                Upload Book
-                            </Button>
-                        </label>
-                    </>
-                </div>
             </Box>
+
             <Box>
                 <Typography display='inline' className={classes.subtitle} variant="subtitle1" noWrap>
                     Subtitle:

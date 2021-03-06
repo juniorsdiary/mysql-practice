@@ -1,7 +1,6 @@
-1. Pdf to Png converter with pdfjs
-1. Search
 1. Add cyrillic support
 1. Add more books
+1. Search
 
 
 1. Add unit-testing

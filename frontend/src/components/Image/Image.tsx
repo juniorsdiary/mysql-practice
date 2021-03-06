@@ -1,28 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import React, { useEffect, useRef, useState } from 'react';
 import { ImageProps } from './types';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { blobToDataUrl } from '../../utils/blobToDataUrl';
 
-const useStyles = makeStyles((theme: Theme) => {
-        console.log(theme);
-        return createStyles({
-            image: {
-                display: 'block',
-                width: (props: { width: number, height: number }) => `${props?.width}px`,
-                height: (props: { width: number, height: number }) => `${props?.height}px`
-            },
-        });
-    }
-);
-
 const Image: React.FunctionComponent<ImageProps> = ({ width, src, height }: ImageProps) => {
-    const classes = useStyles({
-        width: width || 0,
-        height: height || 0,
-    });
+    const imageRef = useRef<HTMLImageElement>(null);
 
-    const [loadedSrc, setLoadedSrc] = useState<any>()
+    const [loadedSrc, setLoadedSrc] = useState<any>();
+    const [naturalWidth, setNaturalWidth] = useState<number>(0);
+    const [naturalHeight, setNaturalHeight] = useState<number>(0);
 
     useEffect(() => {
         (async () => {
@@ -35,10 +21,18 @@ const Image: React.FunctionComponent<ImageProps> = ({ width, src, height }: Imag
         })()
     }, [src]);
 
+    const handleImageLoaded = () => {
+        setNaturalWidth(imageRef?.current?.naturalWidth || 0);
+        setNaturalHeight(imageRef?.current?.naturalHeight || 0)
+    };
+
     if (loadedSrc) {
         return (
             <img
-                className={classes.image}
+                width={naturalWidth}
+                height={naturalHeight}
+                ref={imageRef}
+                onLoad={handleImageLoaded}
                 src={loadedSrc}
                 alt="book_cover"
                 crossOrigin="anonymous"
@@ -55,4 +49,6 @@ const Image: React.FunctionComponent<ImageProps> = ({ width, src, height }: Imag
     );
 };
 
-export { Image };
+export {
+    Image
+};

@@ -37,7 +37,7 @@ export const $singleBook = createStore<BookType>(initialState)
     .on(getCertainBook.pending, () => initialState)
     .on(getCertainBook.doneData, (_, data) => data)
     .on(uploadBookImage.doneData, (_, data) => data)
-    .on(uploadBook.doneData, (state, data) => ({...state, book_link: data.book_link }));
+    .on(uploadBook.doneData, (state, data) => ({...state, book_link: data.book_link, image_cover_link: data.image_cover_link }));
 
 export const singleBookApi = createApi($singleBook, {
     setBook: (state, data) => setBook(state, data)

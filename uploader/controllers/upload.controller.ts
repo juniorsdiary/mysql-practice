@@ -16,14 +16,18 @@ const uploadBook = async (req: Request, res: Response): Promise<void> => {
     const chunks: Buffer[] = [];
     const id = uuid.v4();
 
-    pass.on('data', (chunk: Buffer) => {
-        if (chunk.length) chunks.push(chunk)
+    const coverImagePromise = new Promise(resolve => {
+        pass.on('data', (chunk: Buffer) => {
+            if (chunk.length) chunks.push(chunk);
+        });
+
+        pass.on('end', async () => {
+            const fileBuffer = Buffer.concat(chunks);
+            const image_cover_link = await uploadPages(fileBuffer, book_id as string);
+            resolve(image_cover_link);
+        });
     });
 
-    pass.on('end', async () => {
-        const fileBuffer = Buffer.concat(chunks);
-        await uploadPages(fileBuffer, book_id as string);
-    });
     // @ts-ignore
     req.file.pipe(pass);
 
@@ -36,8 +40,11 @@ const uploadBook = async (req: Request, res: Response): Promise<void> => {
         }
     });
 
+    const cover_link = await coverImagePromise;
+
     res.json({
         book_link: bookLink,
+        image_cover_link: cover_link,
     });
 }
 

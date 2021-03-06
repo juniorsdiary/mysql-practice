@@ -5,8 +5,9 @@ import { uploadCoverToS3 } from './uploadCoverToS3';
 import { publishUploadCoverResult } from '../../broker/books/publishers';
 import { uploadToS3 } from '../s3/uploadToS3';
 
-const uploadPages = async (buffer: Buffer, bookId: string): Promise<void> => {
+const uploadPages = async (buffer: Buffer, bookId: string): Promise<string | undefined> => {
     const initialDocument = await PDFDocument.load(buffer);
+    let image_cover_link;
 
     const uploadPages = initialDocument.getPages().map(async (_: PDFPage, i: number) => {
         const docForPage = await PDFDocument.create();
@@ -20,6 +21,8 @@ const uploadPages = async (buffer: Buffer, bookId: string): Promise<void> => {
             const image = await pdf2png(pageBuffer);
             const coverLink = await uploadCoverToS3(image, `uploads/books/${bookId}/bookCover.png`);
 
+            image_cover_link = coverLink;
+
             await publishUploadCoverResult({
                 message: {
                     book_id: bookId,
@@ -32,6 +35,7 @@ const uploadPages = async (buffer: Buffer, bookId: string): Promise<void> => {
     });
 
     await Promise.all(uploadPages);
+    return image_cover_link;
 }
 
 export {
