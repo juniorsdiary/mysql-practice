@@ -8,6 +8,7 @@ import { booksRoute } from './routes/books.route';
 import { authorsRoute } from './routes/authors.route';
 import { tagsRoute } from './routes/tags.route';
 import { initConsumers } from './broker';
+import { insertBooks } from './migrations/insertAllBooks';
 
 import ROUTES_NAMES from './const/routes.names';
 
@@ -24,7 +25,7 @@ app.use(ROUTES_NAMES.TAGS, tagsRoute);
 (async () => {
     app.listen(serverConfig.backendPort, async () => {
         await initConsumers();
-
         logger.info(`Server is running http://localhost:${serverConfig.backendPort}`);
+        // await insertBooks();
     });
 })()

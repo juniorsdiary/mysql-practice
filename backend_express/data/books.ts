@@ -1,45 +1,749 @@
 const data = [
-    { "title": "Node Cookbook", "subtitle": "Discover solutions, techniques, and best practices for server-side web development with Node.js 14", "pages": 512, "tag": "JavaScript", "authors": [{"first_name": "Bethany", "last_name": "Griggs", "middle_name":  ""},]},
-    { "title": "Serverless Applications with Node.ja", "subtitle": "", "pages": 395, "tag": "JavaScript", "authors": [{"first_name": "Slobodan", "last_name": "Stojanovic", "middle_name":  ""}, {"first_name": "Aleksandr", "last_name": "Simovic", "middle_name":  ""},]},
-    { "title": "TypeScript Quickly", "subtitle": "", "pages": 520, "tag": "JavaScript", "authors": [{"first_name": "Yakov", "last_name": "Fian", "middle_name":  ""}, {"first_name": "Anton", "last_name": "Moiseev", "middle_name":  ""},]},
-    { "title": "Clean Code in JavaScript", "subtitle": "Develop reliable, maintainable, and robust JavaScript", "pages": 527, "tag": "JavaScript", "authors": [{"first_name": "James", "last_name": "Padolsey", "middle_name":  ""},]},
-    { "title": "Fullstack React with TypeScript", "subtitle": "Learn Pro Patterns for Hooks, Testing, Redux, SSR, and GraphQL", "pages": 321, "tag": "JavaScript", "authors": [{"first_name": "Maksim", "last_name": "Ivanov", "middle_name":  ""}, {"first_name": "Alex", "last_name": "Bespoyasov", "middle_name":  ""},]},
-    { "title": "Functional Programming in JavaScript", "subtitle": "", "pages": 306, "tag": "JavaScript", "authors": [{"first_name": "Luis", "last_name": "Atencio", "middle_name":  ""},]},
-    { "title": "Programming TypeScript", "subtitle": "Making Your JavaScript Applications Scale", "pages": 352, "tag": "JavaScript", "authors": [{"first_name": "Boris", "last_name": "Cherny", "middle_name":  ""},]},
-    { "title": "Deep Learning with JavaScript", "subtitle": "Neural networks in TensorFlow.js", "pages": 561, "tag": "JavaScript", "authors": [{"first_name": "Shanqing", "last_name": "Cai", "middle_name":  ""}, {"first_name": "Stanley", "last_name": "Bileschi", "middle_name":  ""}, {"first_name": "Eric", "last_name": "Nielsen", "middle_name":  "D."}, {"first_name": "Francois", "last_name": "Chollet", "middle_name":  ""},]},
-    { "title": "Programming with Types", "subtitle": "Examples in TypeScript", "pages": 338, "tag": "JavaScript", "authors": [{"first_name": "Vlad", "last_name": "Riscutia", "middle_name":  ""},]},
-    { "title": "Effective TypeScript", "subtitle": "62 Specific Ways to Improve Your TypeScript", "pages": 288, "tag": "JavaScript", "authors": [{"first_name": "Dan", "last_name": "Vanderkam", "middle_name":  ""},]},
-    { "title": "Node.js Web Development", "subtitle": "Server-side web development made easy with Node 14 using practical examples", "pages": 746, "tag": "JavaScript", "authors": [{"first_name": "David", "last_name": "Herron", "middle_name":  ""}]},
-    { "title": "Get Programming with Node.js", "subtitle": "", "pages": 463, "tag": "JavaScript", "authors": [{"first_name": "Jonathan", "last_name": "Wexler", "middle_name":  ""},]},
-    { "title": "Modern Full-Stack Development", "subtitle": "Using TypeScript, React, Node.js, Webpack, and Docker", "pages": 384, "tag": "JavaScript", "authors": [{"first_name": "Frank", "last_name": "Zammetti", "middle_name":  ""},]},
-    { "title": "Data Structures & Algorithms with JavaScript", "subtitle": "Bringing classic computing approaches to the web", "pages": 246, "tag": "JavaScript", "authors": [{"first_name": "Michael", "last_name": "McMillan", "middle_name":  ""}]},
-    { "title": "Mastering TypeScript 3", "subtitle": "Build enterprise-ready, industrial-strenght web applications using TypeScript 3 and modern frameworks", "pages": 625, "tag": "JavaScript", "authors": [{"first_name": "Nathan", "last_name": "Rozentals", "middle_name":  ""},]},
-    { "title": "How JavaScript Works", "subtitle": "", "pages": 304, "tag": "JavaScript", "authors": [{"first_name": "Douglas", "last_name": "Crockford", "middle_name":  ""},]},
-    { "title": "Node.js in practice", "subtitle": "Includes 115 Techniques", "pages": 426, "tag": "JavaScript", "authors": [{"first_name": "Alex", "last_name": "Young", "middle_name":  ""}, {"first_name": "Marc", "last_name": "Harter", "middle_name":  ""}]},
-    { "title": "Professional JavaScript for Web Developers", "subtitle": "", "pages": 1177, "tag": "JavaScript", "authors": [{"first_name": "Matt", "last_name": "Frisbie", "middle_name":  ""},]},
-    { "title": "JavaScript. The Definitive Guide", "subtitle": "Master the World's Most-Used Programming Language", "pages": 1245, "tag": "JavaScript", "authors": [{"first_name": "David", "last_name": "Flanagan", "middle_name":  ""},]},
-    { "title": "Node.js Design Patterns", "subtitle": "Get the best out of Node.js by mastering its most powerful components and patterns to create modular and scalable applications with ease", "pages": 397, "tag": "JavaScript", "authors": [{"first_name": "Aaron", "last_name": "Courville", "middle_name":  ""}, {"first_name": "Ian", "last_name": "Goodfellow", "middle_name":  ""}, {"first_name": "Yoshua", "last_name": "Bengio", "middle_name":  ""}]},
-    { "title": "Data Wrangling with JavaScript", "subtitle": "", "pages": 432, "tag": "JavaScript", "authors": [{"first_name": "Ashley", "last_name": "Davis", "middle_name":  ""}]},
-    {"title": "Bash Pocket Reference", "subtitle": "Help for Power Users ans Sys Admins", "pages": 132, "tag": "Linux", "authors": [{"first_name": "Arnold", "last_name": "Robbins", "middle_name":  ""},]},
-    {"title": "Amazon Web Services for Mobile Developers", "subtitle": "Building Apps with AWS", "pages": 914, "tag": "AWS", "authors": [{"first_name": "Abhishek", "last_name": "Mishra", "middle_name":  ""},]},
-    {"title": "FFmpeg Basics", "subtitle": "Multimedia handling with a fast audio and video encoder", "pages": 216, "tag": "FFmpeg", "authors": [{"first_name": "Frantisek", "last_name": "Korbel", "middle_name":  ""},]},
-    {"title": "Digital Audio Theory", "subtitle": "A practical Guide", "pages": 255, "tag": "Audio Theory", "authors": [{"first_name": "Christopher", "last_name": "Bennet", "middle_name":  "L."}]},
-    {"title": "Web Components in Action", "subtitle": "", "pages": 858, "tag": "Web Components", "authors": [{"first_name": "Ben", "last_name": "Farrell", "middle_name":  ""},]},
-    {"title": "The Hitchiker's Guide to Python", "subtitle": "Best Practices for Development", "pages": 336, "tag": "Python", "authors": [{"first_name": "Kenneth", "last_name": "Reitz", "middle_name":  ""}, {"first_name": "Tanya", "last_name": "Schlusser", "middle_name":  ""},]},
-    {"title": "Coding Projects in Python", "subtitle": "A step-by-step visual guide to creating your own Python projects", "pages": 226, "tag": "Python", "authors": [{"first_name": "Ben", "last_name": "Morgan", "middle_name":  ""}, {"first_name": "Steve", "last_name": "Setford", "middle_name":  ""},]},
-    {"title": "Expert Python Programming", "subtitle": "Become a master in Python by learning coding best practices", "pages": 629, "tag": "Python", "authors": [{"first_name": "Michal", "last_name": "Jaworski", "middle_name":  ""}, {"first_name": "Tarek", "last_name": "Ziade", "middle_name":  ""},]},
-    {"title": "Learn TesorFlow 2.0", "subtitle": "Implement Machine Learing and Deep Learning Models with Python", "pages": 177, "tag": "Python", "authors": [{"first_name": "Pramodm", "last_name": "Singh", "middle_name":  ""}, {"first_name": "Avinash", "last_name": "Manure", "middle_name":  ""}]},
-    {"title": "Machine Learning with Python for everyone", "subtitle": "", "pages": 588, "tag": "Python", "authors": [{"first_name": "Mark", "last_name": "Fenner", "middle_name":  "E."},]},
-    {"title": "Create Simple GUI Applications with Python & Qt5", "subtitle": "The hands-on guide to making desktop apps with Python", "pages": 264, "tag": "Python", "authors": [{"first_name": "Martin", "last_name": "Fitzpatrick", "middle_name":  ""},]},
-    {"title": "Math Adventures with Python", "subtitle": "An illustrated Guide to Exploring Math with Code", "pages": 347, "tag": "Python", "authors": [{"first_name": "Peter", "last_name": "Farrell", "middle_name":  ""},]},
-    {"title": "Illustrated Guide to Python 3", "subtitle": "A Complete Walkthrough of Beginning Python with Unique Illustrations Showing how Python Really Works", "pages": 272, "tag": "Python", "authors": [{"first_name": "Matt", "last_name": "Harrison", "middle_name":  ""},]},
-    {"title": "Neural Networks and Deep Learning", "subtitle": "", "pages": 754, "tag": "Python", "authors": [{"first_name": "Charu", "last_name": "Aggarwal", "middle_name":  "C."},]},
-    {"title": "Programming Machine Learning", "subtitle": "From Coding to Deep Learning", "pages": 326, "tag": "Python", "authors": [{"first_name": "Paolo", "last_name": "Perrotta", "middle_name":  ""},]},
-    {"title": "Practical Python AI Projects", "subtitle": "Mathematical Models of Optimization Problems with Google OR-Tools", "pages": 287, "tag": "", "authors": [{"first_name": "Serge", "last_name": "Kruk", "middle_name":  ""},]},
-    {"title": "Make Your Own Neural Network", "subtitle": "", "pages": 274, "tag": "Python", "authors": [{"first_name": "Tariq", "last_name": "Rashid", "middle_name":  ""},]},
-    {"title": "Tiny Python Projects", "subtitle": "", "pages": 439, "tag": "Python", "authors": [{"first_name": "Ken", "last_name": "Youens-Clark", "middle_name":  ""},]},
-    {"title": "Hands-On Genetic Algorithms with Python", "subtitle": "Applying genetic algorithms to solve real-world deep learning and artificial intelligence problems", "pages": 288, "tag": "Python", "authors": [{"first_name": "Eyal", "last_name": "Wirsansky", "middle_name":  ""},]},
-    {"title": "Introducing Python", "subtitle": "Modern Computing in Simple Packages", "pages": 592, "tag": "Python", "authors": [{"first_name": "Bill", "last_name": "Lubanovic", "middle_name":  ""},]},
+    {
+        "title": "Алгоритмы",
+        "subtitle": "Просто как 2х2",
+        "pages": 247,
+        "tag": "Algorithms",
+        "authors": [
+            {
+                "first_name": "Игорь",
+                "last_name": "Красиков",
+                "middle_name":  "Владимирович"
+            },
+            {
+                "first_name": "Ирина",
+                "last_name": "Красикова",
+                "middle_name":  "Евгеньевна"
+            },
+        ]
+    },
+    {
+        "title": "Algorithms in a Nutshell (RU)",
+        "subtitle": "Second Edition",
+        "pages": 434,
+        "tag": "Algorithms",
+        "authors": [
+            {
+                "first_name": "George",
+                "last_name": "Heineman",
+                "middle_name":  "T."
+            },
+            {
+                "first_name": "Gary",
+                "last_name": "Pollice",
+                "middle_name":  ""
+            },
+            {
+                "first_name": "Stanley",
+                "last_name": "Selkow",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "API",
+        "subtitle": "",
+        "pages": 86,
+        "tag": "General",
+        "authors": [
+            {
+                "first_name": "Сергей",
+                "last_name": "Константинов",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Architecting CSS",
+        "subtitle": "The programmer's Guide to Effective Style Sheets",
+        "pages": 244,
+        "tag": "CSS",
+        "authors": [
+            {
+                "first_name": "Martine",
+                "last_name": "Dowden",
+                "middle_name":  ""
+            },
+            {
+                "first_name": "Michael",
+                "last_name": "Dowden",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Эффективные алгоритмы и сложность вычислений",
+        "subtitle": "",
+        "pages": 368,
+        "tag": "Algorithms",
+        "authors": [
+            {
+                "first_name": "Н.",
+                "last_name": "Кузюрин",
+                "middle_name":  "Н."
+            },
+            {
+                "first_name": "С.",
+                "last_name": "Фомин",
+                "middle_name":  "А."
+            },
+        ]
+    },
+    {
+        "title": "Чистая Архитектура",
+        "subtitle": "Искусство разработки программного обеспечения",
+        "pages": 352,
+        "tag": "General",
+        "authors": [
+            {
+                "first_name": "Robert",
+                "last_name": "Martin",
+                "middle_name":  "C."
+            },
+        ]
+    },
+    {
+        "title": "Computer Science",
+        "subtitle": "An interdisciplinary Approach",
+        "pages": 189,
+        "tag": "General",
+        "authors": [
+            {
+                "first_name": "Robert",
+                "last_name": "Sedgewick",
+                "middle_name":  ""
+            },
+            {
+                "first_name": "Kevin",
+                "last_name": "Wayne",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Algorithmic thinking",
+        "subtitle": "A problem-based introduction",
+        "pages": 410,
+        "tag": "Algorithms",
+        "authors": [
+            {
+                "first_name": "Daniel",
+                "last_name": "Zingaro",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Full-stack React, TypeScript, and Node",
+        "subtitle": "Build cloud-ready web application using React 17 with Hooks and GraphQL",
+        "pages": 648,
+        "tag": "JavaScript",
+        "authors": [
+            {
+                "first_name": "David",
+                "last_name": "Choi",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Nginx Cookbook (RU)",
+        "subtitle": "Продвинутые рецепты высокопроизводительной балансировки нагрузки",
+        "pages": 177,
+        "tag": "nginx",
+        "authors": [
+            {
+                "first_name": "Derek",
+                "last_name": "DeJonghe",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Nginx unit Cookbook",
+        "subtitle": "Recipes for Using a Versatile Open Source Server",
+        "pages": 71,
+        "tag": "nginx",
+        "authors": [
+            {
+                "first_name": "Derek",
+                "last_name": "DeJonghe",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Погружение в Паттерны проектирования",
+        "subtitle": "",
+        "pages": 45,
+        "tag": "Patterns",
+        "authors": [
+            {
+                "first_name": "Александр",
+                "last_name": "Швец",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Computer Science and Coding",
+        "subtitle": "Everything you need to ace computer science and coding in one big fat notebook",
+        "pages": 577,
+        "tag": "Computer Science",
+        "authors": [
+            {
+                "first_name": "Grant",
+                "last_name": "Smith",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Рефакторинг",
+        "subtitle": "Улучшение существующего кода",
+        "pages": 268,
+        "tag": "General",
+        "authors": [
+            {
+                "first_name": "Martin",
+                "last_name": "Fowler",
+                "middle_name":  ""
+            }
+        ]
+    },
+    {
+        "title": "Математическая логика и теория алгоритмов для программистов",
+        "subtitle": "",
+        "pages": 207,
+        "tag": "Algorithms",
+        "authors": [
+            {
+                "first_name": "Дмитрий",
+                "last_name": "Гринченков",
+                "middle_name":  "Валерьевич"
+            },
+            {
+                "first_name": "Сергей",
+                "last_name": "Потоцкий",
+                "middle_name":  "Иванович"
+            },
+        ]
+    },
+    {
+        "title": "gRPC: Запуск и эксплуатация облачных приложений",
+        "subtitle": "Go и Java для Docker и Kubernetes",
+        "pages": 224,
+        "tag": "grpc",
+        "authors": [
+            {
+                "first_name": "Kasun",
+                "last_name": "Indrasiri",
+                "middle_name":  ""
+            },
+            {
+                "first_name": "Denesh",
+                "last_name": "Kuruppu",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "97 things Every Programmer Should Know (RU)",
+        "subtitle": "Collective Wisdom from the Experts",
+        "pages": 254,
+        "tag": "General",
+        "authors": [
+            {
+                "first_name": "Kevin Henney",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Software Architect's Handbook",
+        "subtitle": "Become a successful software architect by implementing effective architecture concepts",
+        "pages": 584,
+        "tag": "Architecture",
+        "authors": [
+            {
+                "first_name": "Joseph",
+                "last_name": "Ingeneo",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Компьютерные сети",
+        "subtitle": "Нисходящий поток",
+        "pages": 912,
+        "tag": "General",
+        "authors": [
+            {
+                "first_name": "James",
+                "last_name": "Kurose",
+                "middle_name":  ""
+            },
+            {
+                "first_name": "Keith",
+                "last_name": "Ross",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Learn Algorithmic Trading",
+        "subtitle": "Build and deploy algorithmic trading systems and strategies using Python and advanced data analysis",
+        "pages": 378,
+        "tag": "Algorithms",
+        "authors": [
+            {
+                "first_name": "Sebastien",
+                "last_name": "Donadio",
+                "middle_name":  ""
+            },
+            {
+                "first_name": "Sourav",
+                "last_name": "Ghosh",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Microservices and Containers",
+        "subtitle": "",
+        "pages": 240,
+        "tag": "Patterns",
+        "authors": [
+            {
+                "first_name": "Singh",
+                "last_name": "Kocher",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "Mastering Linux Shell Scripting",
+        "subtitle": "A practical guide to Linux command-line, Bash scripting and Shell programming",
+        "pages": 273,
+        "tag": "Linux",
+        "authors": [
+            {
+                "first_name": "Mokhtar",
+                "last_name": "Ebrahim",
+                "middle_name":  ""
+            },
+        ]
+    },
+    {
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },{
+        "title": "",
+        "subtitle": "",
+        "pages": 0,
+        "tag": "",
+        "authors": [
+            {
+                "first_name": "",
+                "last_name": "",
+                "middle_name":  ""
+            },
+        ]
+    },
 ];
 
 export { data };

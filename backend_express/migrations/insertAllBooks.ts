@@ -6,7 +6,9 @@ import { getOrCreateBookTag } from '../helpers/mysql/bookTag/getOrCreateBookTag'
 import { executePromiseQueue } from "../utils/executePromiseQueue";
 import { data } from '../data/books';
 
-const insertBooks = async () => {
+export { insertBooks };
+
+const insertBooks = async (): Promise<void> => {
     const insertPromises = data.map((book) => async () => {
         const bookResult = await getOrCreateBook(book);
         const insertAuthorsPromise = book.authors.map((author) => async () => {
@@ -26,5 +28,3 @@ const insertBooks = async () => {
 
     await executePromiseQueue(insertPromises);
 };
-
-export { insertBooks };
