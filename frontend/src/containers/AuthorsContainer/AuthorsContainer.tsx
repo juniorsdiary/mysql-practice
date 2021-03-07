@@ -4,6 +4,7 @@ import { $authors, getAuthorsFx } from '../../stores/authors';
 import { useStore } from 'effector-react';
 import { DataTable } from '../../components/DataTable/DataTable';
 import { useHistory } from 'react-router-dom';
+import {AuthorType} from "../../types";
 
 const AuthorsContainer: React.FunctionComponent = () => {
     const history = useHistory();
@@ -43,20 +44,18 @@ const AuthorsContainer: React.FunctionComponent = () => {
 
     return (
         <>
-            <DataTable
-                data={{
-                    columns: [
-                        { tableHeadName: 'First Name', key: 'first_name'},
-                        { tableHeadName: 'Middle Name', key: 'middle_name'},
-                        { tableHeadName: 'Last Name', key: 'last_name'},
-                    ],
-                    orderBy,
-                    orderDir,
-                    count: authorsStore.count,
-                    page,
-                    rowsPerPage,
-                    list: authorsStore.authors || [],
-                }}
+            <DataTable<AuthorType>
+                data={authorsStore.authors || []}
+                columns={[
+                    { tableHeadName: 'First Name', key: 'first_name'},
+                    { tableHeadName: 'Middle Name', key: 'middle_name'},
+                    { tableHeadName: 'Last Name', key: 'last_name'},
+                ]}
+                count={authorsStore.count}
+                orderBy={orderBy}
+                orderDir={orderDir}
+                page={page}
+                rowsPerPage={rowsPerPage}
                 onChangeOrder={handleChangeOrder}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}

@@ -8,7 +8,6 @@ import { Box } from "@material-ui/core";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import TableBody from "@material-ui/core/TableBody";
-import { BookType, BookKeysEnum, AuthorKeysEnum } from "../../types";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableContainer from "@material-ui/core/TableContainer";
 
@@ -41,23 +40,31 @@ const useStyles = makeStyles(() =>
     }),
 );
 
-type DataTableType = {
-    data: {
-        columns: { tableHeadName: string; key: string }[];
-        orderBy: string;
-        orderDir: string;
-        count: number;
-        page: number;
-        rowsPerPage: number;
-        list: any[];
-    }
+type ColumnType<T> = {
+    tableHeadName: string;
+    key: keyof T
+}
+
+type DataTableType<T> = {
+    data: Array<T>;
+    columns: Array<ColumnType<T>>;
+    orderBy: string;
+    orderDir: string;
+    count: number;
+    page: number;
+    rowsPerPage: number;
     onChangeOrder: (key: string) => void;
     onChangePage: (newPage: number) => void;
     onChoosePage: (page: number) => void;
     onChangeRowsPerPage: (rowsPerPage: number) => void;
 }
 
-const DataTable = ({ data, onChangeOrder, onChangePage, onChangeRowsPerPage, onChoosePage }: DataTableType): JSX.Element => {
+function DataTable<T extends { id: number; }>(props: DataTableType<T>): JSX.Element {
+    const {
+        data, columns, orderBy, orderDir, count, page,
+        rowsPerPage, onChangeOrder, onChangePage, onChangeRowsPerPage, onChoosePage
+    } = props;
+
     const classes = useStyles();
 
     const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
@@ -69,15 +76,23 @@ const DataTable = ({ data, onChangeOrder, onChangePage, onChangeRowsPerPage, onC
     }
 
     return (
-        <TableContainer className={classes.tableContainer} component={Paper}>
+        <TableContainer
+            className={classes.tableContainer}
+            component={Paper}
+        >
             <Table className={classes.table} size="small">
                 <TableHead>
                     <TableRow>
-                        {data?.columns?.map(column => (
-                            <TableCell key={column.key} className={classes.tableCell} align="left" onClick={() => onChangeOrder(column.key)}>
+                        {columns?.map(column => (
+                            <TableCell
+                                key={column.key as string}
+                                className={classes.tableCell}
+                                align="left"
+                                onClick={() => onChangeOrder(column.key as string)}
+                            >
                                 <Box display="flex" alignItems="center" >
                                     {column.tableHeadName}
-                                    {data.orderBy === column.key && (data.orderDir === 'asc'
+                                    {orderBy === column.key && (orderDir === 'asc'
                                             ? <ExpandLessIcon  />
                                             : <ExpandMore />
                                     )}
@@ -87,15 +102,18 @@ const DataTable = ({ data, onChangeOrder, onChangePage, onChangeRowsPerPage, onC
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {data?.list?.map((book: BookType) => (
-                        <TableRow className={classes.tableRow} hover key={book.id} onClick={() => onChoosePage(book.id)}>
-                            {data?.columns?.map(column => {
-                                return (
-                                    <TableCell key={column.key} align="left">
-                                        {book[column.key as BookKeysEnum & AuthorKeysEnum]}
-                                    </TableCell>
-                                );
-                            })}
+                    {data?.map(item => (
+                        <TableRow
+                            hover
+                            className={classes.tableRow}
+                            key={item.id}
+                            onClick={() => onChoosePage(item.id)}
+                        >
+                            {columns?.map(column => (
+                                <TableCell key={column.key as string} align="left">
+                                    {item[column.key]}
+                                </TableCell>
+                            ))}
                         </TableRow>
                     ))}
                 </TableBody>
@@ -103,14 +121,14 @@ const DataTable = ({ data, onChangeOrder, onChangePage, onChangeRowsPerPage, onC
             <TablePagination
                 className={classes.paginateContainer}
                 component="div"
-                count={data?.count}
-                page={data?.page}
+                count={count}
+                page={page}
+                rowsPerPage={rowsPerPage}
                 onChangePage={handleChangePage}
-                rowsPerPage={data?.rowsPerPage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
             />
         </TableContainer>
     );
-};
+}
 
 export { DataTable };

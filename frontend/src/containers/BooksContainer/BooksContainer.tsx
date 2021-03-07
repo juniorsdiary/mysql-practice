@@ -7,6 +7,7 @@ import { $books, getBooksFx } from '../../stores/books';
 
 // types
 import { DataTable } from '../../components/DataTable/DataTable';
+import { BookType } from '../../types';
 
 const BooksContainer: React.FunctionComponent = () => {
     const history = useHistory();
@@ -48,20 +49,18 @@ const BooksContainer: React.FunctionComponent = () => {
 
     return (
         <>
-            <DataTable
-                data={{
-                    columns: [
-                        { tableHeadName: 'Title', key: 'title'},
-                        { tableHeadName: 'Description', key: 'subtitle'},
-                        { tableHeadName: 'Pages', key: 'pages'},
-                    ],
-                    orderBy,
-                    orderDir,
-                    count: booksStore.count,
-                    page,
-                    rowsPerPage,
-                    list: booksStore.books || [],
-                }}
+            <DataTable<BookType>
+                data={booksStore.books || []}
+                columns={[
+                    { tableHeadName: 'Title', key: 'title'},
+                    { tableHeadName: 'Description', key: 'subtitle'},
+                    { tableHeadName: 'Pages', key: 'pages'},
+                ]}
+                orderBy={orderBy}
+                orderDir={orderDir}
+                count={booksStore.count}
+                page={page}
+                rowsPerPage={rowsPerPage}
                 onChangeOrder={handleChangeOrder}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}

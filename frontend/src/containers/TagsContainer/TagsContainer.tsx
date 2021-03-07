@@ -5,6 +5,7 @@ import { useStore } from 'effector-react';
 import { DataTable } from '../../components/DataTable/DataTable';
 
 import { $tags, getTagsFx } from '../../stores/tags';
+import {TagType} from "../../types";
 
 const TagsContainer = (): JSX.Element => {
     const history = useHistory();
@@ -44,20 +45,18 @@ const TagsContainer = (): JSX.Element => {
 
     return (
         <>
-            <DataTable
-                data={{
-                    columns: [
-                        { tableHeadName: 'Tag id', key: 'tag_id'},
-                        { tableHeadName: 'Tag Name', key: 'tag_name'},
-                        { tableHeadName: 'Books', key: 'books'},
-                    ],
-                    orderBy,
-                    orderDir,
-                    count: tagsStore.count,
-                    page,
-                    rowsPerPage,
-                    list: tagsStore.tags || [],
-                }}
+            <DataTable<TagType>
+                data={tagsStore.tags || []}
+                columns={[
+                    { tableHeadName: 'Tag id', key: 'tag_id'},
+                    { tableHeadName: 'Tag Name', key: 'tag_name'},
+                    { tableHeadName: 'Books', key: 'books'},
+                ]}
+                count={tagsStore.count}
+                orderBy={orderBy}
+                orderDir={orderDir}
+                page={page}
+                rowsPerPage={rowsPerPage}
                 onChangeOrder={handleChangeOrder}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}

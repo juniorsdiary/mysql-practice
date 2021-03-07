@@ -26,27 +26,6 @@ export type TagType = {
     books: BookType[];
 };
 
-export enum BookKeysEnum {
-    id = 'id',
-    title = 'title',
-    pages = 'pages',
-    subtitle = 'subtitle',
-    book_link = 'book_link',
-    authors = 'authors',
-    tags = 'tags',
-}
-
-export enum AuthorKeysEnum {
-    first_name = 'first_name',
-    last_name = 'last_name',
-    middle_name = 'middle_name',
-}
-
-export enum AuthorKeysEnum {
-    tag_id = 'tag_id',
-    tag_name = 'tag_name',
-}
-
 export type FetchEntityType = {
     skip: number;
     limit: number;
