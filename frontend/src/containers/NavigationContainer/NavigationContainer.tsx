@@ -11,6 +11,7 @@ export const links = [
     { href: '/books', title: "Books" },
     { href: '/authors', title: "Authors" },
     { href: '/tags', title: "Tags" },
+    { href: '/search', title: "Search" },
 ];
 
 const useStyles = makeStyles(() =>
@@ -53,4 +54,6 @@ const NavigationContainer = (): JSX.Element => {
     );
 };
 
-export { NavigationContainer };
+export {
+    NavigationContainer
+};

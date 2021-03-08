@@ -1,4 +1,4 @@
-const getInsertQuery = (table: string, data: { [key: string]: any }) => {
+const getInsertQuery = (table: string, data: { [key: string]: any }): string => {
     const keys = Object.keys(data).join(', ');
 
     const values = Object.keys(data).map(() => `?`).join(', ');

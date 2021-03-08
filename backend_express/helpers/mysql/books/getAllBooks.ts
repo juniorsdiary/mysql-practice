@@ -12,9 +12,9 @@ const getAllBooks = async ({ skip, limit, order, orderBy }: GetEntityArgs): Prom
         orderBy
     });
 
-    const books = await executeMysqlQuery(selectEntityQuery, []);
+    const books = await executeMysqlQuery<BookType>(selectEntityQuery, []);
 
-    const count = await executeMysqlQuery(`SELECT COUNT(*) FROM ${BOOKS_TABLE_NAME}`, []);
+    const count = await executeMysqlQuery<any>(`SELECT COUNT(*) FROM ${BOOKS_TABLE_NAME}`, []);
 
     return {
         data: books.map((book: BookType) => ({ ...book, id: book.book_id })),

@@ -15,7 +15,8 @@ export type AuthorType = {
 export type TagType = {
     tag_id: number;
     tag_name: string;
-    books?: BookType[];
+    id?: number;
+    books?: BookType[] | number;
 }
 
 export type GetEntityArgs = {
@@ -42,3 +43,13 @@ export type BuildSelectQueryArgsType = {
     order?: string;
     orderBy?: string;
 };
+
+export type SearchResultType = {
+    title?: string;
+    first_name?: string;
+    last_name?: string;
+    skip?: number;
+    limit?: number;
+    order?: string;
+    orderBy?: string;
+}

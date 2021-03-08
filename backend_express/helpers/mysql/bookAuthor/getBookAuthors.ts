@@ -1,7 +1,7 @@
 import { AUTHORS_TABLE_NAME, BOOK_AUTHOR_TABLE_NAME, BOOKS_TABLE_NAME } from '../TABLES';
 import { executeMysqlQuery } from '../executeMysqlQuery';
 
-const getBookAuthors = async (id: string) => {
+const getBookAuthors = async <T>(id: string): Promise<Array<T>> => {
     const selectQuery = `
         SELECT ${AUTHORS_TABLE_NAME}.author_id, ${AUTHORS_TABLE_NAME}.first_name, ${AUTHORS_TABLE_NAME}.last_name, ${AUTHORS_TABLE_NAME}.middle_name  FROM ${BOOKS_TABLE_NAME}
         JOIN ${BOOK_AUTHOR_TABLE_NAME} ON ${BOOK_AUTHOR_TABLE_NAME}.book_id = ${BOOKS_TABLE_NAME}.book_id
@@ -9,7 +9,7 @@ const getBookAuthors = async (id: string) => {
         WHERE ${BOOKS_TABLE_NAME}.book_id = ${id}
     `;
 
-    return await executeMysqlQuery(selectQuery, [id]);
+    return await executeMysqlQuery<T>(selectQuery, [id]);
 }
 
 export { getBookAuthors }

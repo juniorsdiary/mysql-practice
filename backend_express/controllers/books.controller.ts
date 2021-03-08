@@ -25,8 +25,8 @@ const getBooks = async (req: Request, res: Response): Promise<unknown> => {
 const getBook = async (req: Request, res: Response): Promise<unknown> => {
     const bookId = req.params.id;
     const book: BookType[] = await getOneBook(bookId);
-    const bookAuthors: AuthorType[] = await getBookAuthors(bookId);
-    const bookTags: TagType[] = await getBookTags(bookId);
+    const bookAuthors = await getBookAuthors<AuthorType>(bookId);
+    const bookTags = await getBookTags<TagType>(bookId);
 
     res.json({
         ...(book[0]),

@@ -13,9 +13,9 @@ const getAllTags = async ({ skip, limit, order, orderBy }: GetEntityArgs): Promi
         orderBy
     });
 
-    const tags = await executeMysqlQuery(selectEntityQuery, []);
+    const tags = await executeMysqlQuery<TagType>(selectEntityQuery, []);
 
-    const count = await executeMysqlQuery(`SELECT COUNT(*) FROM ${TAGS_TABLE_NAME}`, []);
+    const count = await executeMysqlQuery<any>(`SELECT COUNT(*) FROM ${TAGS_TABLE_NAME}`, []);
 
     const tagsWithBooks = tags.map(async (tag: TagType) => {
         const tagBooks: BookType[] = await getTagBooks(String(tag.tag_id));
@@ -24,10 +24,10 @@ const getAllTags = async ({ skip, limit, order, orderBy }: GetEntityArgs): Promi
             ...tag,
             id: tag.tag_id,
             books: tagBooks.length
-        };
+        } as TagType;
     });
 
-    const data: TagType[] = await Promise.all(tagsWithBooks);
+    const data = await Promise.all(tagsWithBooks);
 
     return {
         data,
