@@ -1,6 +1,6 @@
 import { getUpdateQuery } from '../getUpdateQuery';
 import { executeMysqlQuery } from '../executeMysqlQuery';
-import { BOOKS_TABLE_NAME } from '../TABLES';
+import { BOOKS_TABLE_NAME } from '../../../const/TABLES';
 
 const updateBook = async (data: any) => {
     const updateBookQuery = getUpdateQuery(BOOKS_TABLE_NAME, data);

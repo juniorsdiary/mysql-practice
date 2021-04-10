@@ -12,8 +12,6 @@ COPY . ./
 
 EXPOSE 3000
 
-RUN pwd
-
 RUN chmod +x ./wait-for-it.sh
 
 ENTRYPOINT ./wait-for-it.sh -s mysql:3306 -- npm run start

@@ -1,6 +1,6 @@
 import { BookType } from '../../../types';
 import { executeMysqlQuery } from '../executeMysqlQuery';
-import { BOOK_TAG_TABLE_NAME, BOOKS_TABLE_NAME, TAGS_TABLE_NAME } from '../TABLES';
+import { BOOK_TAG_TABLE_NAME, BOOKS_TABLE_NAME, TAGS_TABLE_NAME } from '../../../const/TABLES';
 
 type OptionsType = {
     count?: boolean;

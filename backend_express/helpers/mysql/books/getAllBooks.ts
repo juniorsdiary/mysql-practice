@@ -1,5 +1,5 @@
 import { executeMysqlQuery } from '../executeMysqlQuery';
-import { BOOKS_TABLE_NAME } from '../TABLES';
+import { BOOKS_TABLE_NAME } from '../../../const/TABLES';
 import { BookType, GetEntityArgs, SelectEntityResponse } from '../../../types';
 import { buildSelectEntityQuery } from '../buildSelectEntityQuery';
 

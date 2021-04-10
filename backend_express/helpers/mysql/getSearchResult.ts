@@ -1,6 +1,6 @@
 import { BookType, SearchResultType } from '../../types';
 import { executeMysqlQuery } from './executeMysqlQuery';
-import { AUTHORS_TABLE_NAME, BOOK_AUTHOR_TABLE_NAME, BOOKS_TABLE_NAME } from './TABLES';
+import { AUTHORS_TABLE_NAME, BOOK_AUTHOR_TABLE_NAME, BOOKS_TABLE_NAME } from '../../const/TABLES';
 
 const getSearchResult = async ({ title, first_name, last_name, skip, limit, order, orderBy }: SearchResultType): Promise<unknown> => {
     const titleQuery = title ? `b.title LIKE "%${title}%"` : '';

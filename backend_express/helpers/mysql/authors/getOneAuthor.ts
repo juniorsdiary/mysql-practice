@@ -1,5 +1,5 @@
 import { executeMysqlQuery } from '../executeMysqlQuery';
-import { AUTHORS_TABLE_NAME } from '../TABLES';
+import { AUTHORS_TABLE_NAME } from '../../../const/TABLES';
 import { AuthorType } from '../../../types';
 
 const getOneAuthor = async (id: string): Promise<AuthorType[]> => {

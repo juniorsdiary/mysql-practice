@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useStore } from 'effector-react';
 
 // store
@@ -9,6 +9,13 @@ import { BooksTable } from '../../components/BooksTable/BooksTable';
 
 const BooksContainer: React.FunctionComponent = () => {
     const booksStore = useStore($books);
+
+    useEffect(() => {
+        getBooksFx({
+            skip: 10,
+            limit: 10
+        });
+    }, []);
 
     const handleTableDataChange = useCallback(({ page, rowsPerPage, orderDir, orderBy }) => {
         getBooksFx({

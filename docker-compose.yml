@@ -5,7 +5,7 @@ networks:
 
 services:
   mysql:
-    image: mysql:5.7
+    image: mysql:8
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=homedatabase
@@ -15,9 +15,8 @@ services:
     networks:
       - mysql_practice
     volumes:
-      - /data/mysqlpractice/mysql:/var/lib/mysql
+      - ~/data/mysqlpractice/mysql:/var/lib/mysql
       - ./mycustom.cnf:/etc/mysql/conf.d/mysql.cnf
-#    command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   rabbit:
     image: rabbitmq:3.7.18-management-alpine
@@ -33,7 +32,7 @@ services:
     networks:
       - mysql_practice
     volumes:
-      - /rabbit:/var/lib/rabbitmq
+      - ~/rabbit:/var/lib/rabbitmq
 
   backend_express:
     build:
@@ -59,8 +58,6 @@ services:
       - rabbit
     networks:
       - mysql_practice
-    volumes:
-      - ./backend_express:/usr/src/app/backend
 
   uploader:
     build:
@@ -81,8 +78,6 @@ services:
       - rabbit
     networks:
       - mysql_practice
-    volumes:
-      - ./uploader:/usr/src/app/uploader
 
 #  backend_nest:
 #    build:
@@ -107,5 +102,3 @@ services:
       - backend_express
     networks:
       - mysql_practice
-    volumes:
-    - ./frontend:/usr/src/app/frontend

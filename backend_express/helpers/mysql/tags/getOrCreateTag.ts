@@ -1,7 +1,7 @@
 import { getSelectQuery } from '../getSelectQuery';
 import { executeMysqlQuery } from '../executeMysqlQuery';
 import { getInsertQuery } from "../getInsertQuery";
-import { TAGS_TABLE_NAME } from '../TABLES';
+import { TAGS_TABLE_NAME } from '../../../const/TABLES';
 
 const getOrCreateTag = async (tag: string) => {
     const tagSelectQuery = getSelectQuery(TAGS_TABLE_NAME, 'tag_name');

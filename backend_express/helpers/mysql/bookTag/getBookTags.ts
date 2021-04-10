@@ -2,7 +2,7 @@ import {
     BOOK_TAG_TABLE_NAME,
     BOOKS_TABLE_NAME,
     TAGS_TABLE_NAME
-} from '../TABLES';
+} from '../../../const/TABLES';
 
 import { executeMysqlQuery } from '../executeMysqlQuery';
 

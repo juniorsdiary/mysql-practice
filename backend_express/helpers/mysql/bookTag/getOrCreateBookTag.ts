@@ -1,4 +1,4 @@
-import { BOOK_TAG_TABLE_NAME } from '../TABLES';
+import { BOOK_TAG_TABLE_NAME } from '../../../const/TABLES';
 import { executeMysqlQuery } from '../executeMysqlQuery';
 import { getInsertQuery } from '../getInsertQuery';
 

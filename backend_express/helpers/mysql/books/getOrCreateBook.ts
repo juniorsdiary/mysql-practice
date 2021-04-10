@@ -1,6 +1,6 @@
 import { executeMysqlQuery } from '../executeMysqlQuery';
 import { getInsertQuery } from "../getInsertQuery";
-import { BOOKS_TABLE_NAME } from '../TABLES';
+import { BOOKS_TABLE_NAME } from '../../../const/TABLES';
 
 const getOrCreateBook = async (book: any) => {
     const bookSelectQuery = `SELECT * FROM ${BOOKS_TABLE_NAME} where title= ? AND subtitle= ? AND pages= ?`;

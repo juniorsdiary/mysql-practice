@@ -1,4 +1,4 @@
-import { AUTHORS_TABLE_NAME } from '../TABLES';
+import { AUTHORS_TABLE_NAME } from '../../../const/TABLES';
 import { executeMysqlQuery } from '../executeMysqlQuery';
 import { getInsertQuery } from '../getInsertQuery';
 

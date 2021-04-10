@@ -1,5 +1,5 @@
 import { executeMysqlQuery } from '../executeMysqlQuery';
-import { BOOKS_TABLE_NAME } from '../TABLES';
+import { BOOKS_TABLE_NAME } from '../../../const/TABLES';
 import { BookType } from '../../../types';
 
 const getOneBook = async (id: string): Promise<BookType[]> => {

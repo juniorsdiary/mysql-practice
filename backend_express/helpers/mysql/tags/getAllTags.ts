@@ -1,4 +1,4 @@
-import { TAGS_TABLE_NAME } from '../TABLES';
+import { TAGS_TABLE_NAME } from '../../../const/TABLES';
 import { executeMysqlQuery} from '../executeMysqlQuery';
 import { BookType, GetEntityArgs, SelectEntityResponse, TagType } from '../../../types';
 import { buildSelectEntityQuery } from '../buildSelectEntityQuery';
