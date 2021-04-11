@@ -40,7 +40,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - ./backend_express/.env
+      - backend_express/.env
     depends_on:
       - mysql
       - rabbit
