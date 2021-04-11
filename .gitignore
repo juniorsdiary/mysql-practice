@@ -2,5 +2,6 @@
 /backend_nest/node_modules
 /frontend/node_modules
 /uploader/node_modules
+/uploader/.env
 /.idea
 frontend/.eslintcache

@@ -5,8 +5,8 @@ const serverConfig = {
 const awsConfig = {
     bucketName: 'mysqlpractice',
     region: ' us-east-1',
-    accessKeyId: 'AKIAVOGE3243T44OSFGW',
-    secretAccessKey: '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'
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_ACCESS_KEY
 };
 
 const rabbitConfig = {
