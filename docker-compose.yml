@@ -7,9 +7,8 @@ services:
   mysql:
     image: mysql:8
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=homedatabase
-      - MYSQL_DATABASE=mysqlpractice
+    env_file:
+      - ./mysql/.env
     ports:
       - 3307:3306
     networks:
@@ -40,16 +39,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    environment:
-      - BACKEND_PORT=3000
-      - MYSQL_HOST=mysql
-      - MYSQL_USER=root
-      - MYSQL_PORT=3306
-      - MYSQL_DATABASE=mysqlpractice
-      - MYSQL_ROOT_PASSWORD=homedatabase
-      - RABBIT_HOST=rabbit
-      - RABBIT_USER=randomString
-      - RABBIT_PASS=randomString
+    env_file:
+      - ./backend_express/.env
     depends_on:
       - mysql
       - rabbit
@@ -63,13 +54,10 @@ services:
     build:
       context: ./uploader
       dockerfile: Dockerfile
+    env_file:
+      - ./uploader/.env
     ports:
       - 4000:4000
-    environment:
-      - UPLOADER_PORT=4000
-      - RABBIT_HOST=rabbit
-      - RABBIT_USER=randomString
-      - RABBIT_PASS=randomString
     depends_on:
       - mysql
       - rabbit
